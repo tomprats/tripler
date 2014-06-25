@@ -1,0 +1,39 @@
+div#primaryimage {
+  margin-left: auto;
+  margin-right: auto;
+  height: 240px;
+  width: 736px;
+}
+div#primaryimage .facebook{
+  float: right;
+}
+
+nav {
+  padding-top: 10px;
+  text-align: center;
+  font-size: 12px;
+  font-family: Truckstyle, TruckstyleEI;
+  display: block;
+  background-color: #667C26;
+}
+a, img {
+  border:none;
+}
+div#nav a {
+  margin: 1em;
+  text-decoration: none;
+}
+div#nav a:link {color: #FFFFFF;}    /* unvisited link */
+div#nav a:visited {color: #FFFFFF;} /* visited link */
+div#nav a:hover {color: #000000;}   /* mouse over link */
+div#nav a:active {color: #0000FF;}  /* as clicked link */
+
+@font-face {
+  font-family: Truckstyle;
+  src: asset-url("LHFBostonTruckstyle.ttf");
+}
+
+@font-face {
+  font-family: TruckstyleEI;
+  src: asset-url("LHFBostonTruckstyle.eot");
+}

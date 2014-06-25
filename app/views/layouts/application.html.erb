@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tripler</title>
+    <title>Triple R Farms</title>
+    <meta name="description" content="Triple R Farms Jerky features coffee from Cowboy Coffee, providing a delicious, energy boosting taste">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <%= render partial: "layouts/navbar" %>
+    <%= yield %>
+    <%= render partial: "layouts/footer" %>
+  </body>
+</html>
