@@ -1,11 +1,12 @@
-div#contact #leftcolumn {
-  float: left;
-  width: 357px;
-  padding-right: 10px;
-}
-div#contact #rightcolumn {
-  float: right;
-  padding-left: 10px;
-  width: 357px;
-  border-left: 2px solid white;
+#contact {
+  .left-column {
+    border-right: 2px solid white;
+  }
+
+  .form-field {
+    padding-bottom: 10px;
+    input, textarea {
+      width: 100%;
+    }
+  }
 }

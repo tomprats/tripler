@@ -11,6 +11,11 @@
  *= require_self
  *= require_tree .
  */
+@import "bootstrap";
+
+.btn-green {
+  @include button-variant(white, #667C26, #667C26);
+}
 
 body {
   margin-left: auto;
@@ -32,35 +37,37 @@ span.highlight { color: yellow; }
 h1 { text-align: center; }
 h3 { text-align: center; }
 
+a, img {
+  border:none;
+}
+
 /* Main Content */
 div#secondaryimage {
   margin: 20px;
   text-align: center;
 }
 div#mainpage {
+  width: 776px;
   margin-left: auto;
   margin-right: auto;
   border: 3px solid white;
   border-radius: 10px;
   padding: 20px;
   text-align: left;
-  width: 736px;
 }
 
 /* Footer */
-div#footer{
+#footer {
+  width: 736px;
   margin-left: auto;
   margin-right: auto;
-  width: 736px;
 }
-div#footer a:link {color: #667C26;}		/* unvisited link */
-div#footer a:visited {color: #667C26;}		/* visited link */
-div#footer a:hover {color: #FFFFFF;}		/* mouse over link */
-div#footer a:active {color: #0000FF;}		/* as clicked link */
-div#footer a {text-decoration: none;}
 
 /* All links aside from nav bar/footer */
-a:link {color: #FFFFFF;}    /* unvisited link */
-a:visited {color: #FFFFFF;} /* visited link */
-a:hover {color: #667C26;}   /* mouse over link */
-a:active {color: #0000FF;}  /* as clicked link */
+a {
+  text-decoration: none;
+  &:link { color: #667C26; }    /* unvisited link */
+  &:visited { color: #667C26; } /* visited link */
+  &:hover { color: #FFFFFF; }   /* mouse over link */
+  &:active { color: #0000FF; }  /* as clicked link */
+}

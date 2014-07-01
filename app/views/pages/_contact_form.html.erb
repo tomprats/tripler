@@ -1,0 +1,17 @@
+<%= form_for :feedback do |f| %>
+  <div class="form-field">
+    <%= f.label :name %>
+    <%= f.text_field :name, value: current_user.try(:name) %>
+  </div>
+  <div class="form-field">
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </div>
+  <div class="form-field">
+    <%= f.label :message %>
+    <%= f.text_area :message %>
+  </div>
+  <div class="text-center">
+    <%= f.submit "Submit", class: "btn btn-green" %>
+  </div>
+<% end %>

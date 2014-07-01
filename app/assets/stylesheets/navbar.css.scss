@@ -1,32 +1,30 @@
-div#primaryimage {
+#primaryimage {
   margin-left: auto;
   margin-right: auto;
   height: 240px;
   width: 736px;
-}
-div#primaryimage .facebook{
-  float: right;
+  .facebook{
+    float: right;
+  }
 }
 
 nav {
-  padding-top: 10px;
+  padding-top: 15px;
+  padding-bottom: 5px;
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
   font-family: Truckstyle, TruckstyleEI;
   display: block;
   background-color: #667C26;
 }
-a, img {
-  border:none;
-}
-div#nav a {
+#nav a {
   margin: 1em;
   text-decoration: none;
+  &:link { color: #FFFFFF; }    /* unvisited link */
+  &:visited { color: #FFFFFF; } /* visited link */
+  &:hover { color: #000000; }   /* mouse over link */
+  &:active { color: #0000FF; }  /* as clicked link */
 }
-div#nav a:link {color: #FFFFFF;}    /* unvisited link */
-div#nav a:visited {color: #FFFFFF;} /* visited link */
-div#nav a:hover {color: #000000;}   /* mouse over link */
-div#nav a:active {color: #0000FF;}  /* as clicked link */
 
 @font-face {
   font-family: Truckstyle;

@@ -11,9 +11,70 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20140630232328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "feedback", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "message"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "items", force: true do |t|
+    t.integer  "price"
+    t.string   "name"
+    t.string   "description"
+    t.string   "image"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "order_items", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "total_price"
+    t.integer  "quantity"
+    t.integer  "item_id"
+    t.integer  "price"
+    t.string   "name"
+    t.string   "description"
+    t.string   "image"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "orders", force: true do |t|
+    t.integer  "total_price"
+    t.string   "description"
+    t.string   "charge_token"
+    t.integer  "user_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone_number"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zipcode"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "password"
+    t.string   "phone_number"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zipcode"
+    t.string   "customer_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
