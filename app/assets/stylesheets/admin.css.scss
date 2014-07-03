@@ -1,0 +1,17 @@
+.admin-create-btn {
+  top: 0;
+  left: 0;
+  position: fixed;
+  font-size: 14px;
+  font-family: Truckstyle, TruckstyleEI;
+  margin: 1em;
+  text-decoration: none;
+  color: #FFFFFF;
+  &:hover { color: #000000; }   /* mouse over link */
+  &:active { color: #000000; }  /* as clicked link */
+}
+
+.admin-link {
+  &:hover { color: #000000; }   /* mouse over link */
+  &:active { color: #000000; }  /* as clicked link */
+}

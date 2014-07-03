@@ -20,6 +20,7 @@ Tripler::Application.routes.draw do
     get :orders, to: "orders#index"
     get :feedback, to: "feedback#index"
     get :products, to: "products#index"
+    post :products, to: "products#create"
     get :users, to: "users#index"
 
     delete :sign_out, to: "users#sign_out"

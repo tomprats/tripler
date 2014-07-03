@@ -9,7 +9,7 @@ $(document).ready(function() {
       $userForms.removeClass("hide");
       $(document).on("click.toggle-user-forms", function(e){
         if(!($userForms.is(e.target) || $userForms.has(e.target).length)){
-          $(".user-forms").addClass("hide");
+          $userForms.addClass("hide");
         }
       });
     } else {

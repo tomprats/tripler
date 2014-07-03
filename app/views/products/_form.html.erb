@@ -1,0 +1,25 @@
+<div class="product-form hide">
+  <%= link_to "New Product", "#", class: "prevent-default" %>
+  <%= link_to "x", "#", class: "pull-right create-product" %>
+  <div class="clearfix margin-bottom-5"></div>
+  <%= form_for(:product, url: products_path, remote: true, html: { class: "form-horizontal" }) do |f| %>
+    <div class="margin-top-10 margin-bottom-10">
+      <div class="input-left">
+        <%= f.text_field :name, { placeholder: "Name", class: "form-control", autofocus:true } %>
+      </div>
+      <div class="input-right">
+        <%= f.number_field :price, { placeholder: "Price", class: "form-control", autofocus:true } %>
+      </div>
+      <div class="clearfix margin-bottom-10"></div>
+      <div class="input-full">
+        <%= f.text_field :description, { placeholder: "Description", class: "form-control", autofocus:true } %>
+      </div>
+      <div class="clearfix margin-bottom-10"></div>
+      <div class="input-full">
+        <%= f.file_field :image, { placeholder: "Image", class: "form-control", autofocus:true } %>
+      </div>
+      <div class="clearfix margin-bottom-10"></div>
+      <%= f.submit "Add Product", class: "btn btn-green" %>
+    </div>
+  <% end %>
+</div>

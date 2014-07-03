@@ -15,3 +15,8 @@
 //= require bootstrap
 //= require turbolinks
 //= require_tree .
+
+$(document).on("click", ".prevent-default", function(e) {
+  e.preventDefault();
+  return false;
+});
