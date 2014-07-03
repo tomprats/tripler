@@ -1,12 +1,14 @@
 class ProductImageUploader < CarrierWave::Uploader::Base
   if Rails.env.production?
     include Cloudinary::CarrierWave
+  else
+    storage :file
   end
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
 
-  storage :file
+  process convert: "png"
 
   def store_dir
     "products/#{model.id}"

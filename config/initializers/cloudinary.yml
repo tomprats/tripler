@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: tomprats
+  api_key: '472797296468298'
+  api_secret: qfQBHR5s8Ig646GJMoGO76WkYrY
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: tomprats
+  api_key: '472797296468298'
+  api_secret: qfQBHR5s8Ig646GJMoGO76WkYrY
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: tomprats
+  api_key: '472797296468298'
+  api_secret: qfQBHR5s8Ig646GJMoGO76WkYrY
+  enhance_image_tag: true
+  static_image_support: false
