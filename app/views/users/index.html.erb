@@ -15,7 +15,7 @@
         <td><%= user.email %></td>
         <td><%= user.phone_number %></td>
         <td><%= user.zipcode %></td>
-        <td><%= user.admin %> (<%= link_to "toggle", "#", class: "admin-link", data: { id: user.id } %>)</td>
+        <td><%= user.admin %> (<%= link_to "toggle", toggle_admin_path(id: user.id), class: "admin-link" %>)</td>
       </tr>
     <% end %>
   </tbody>

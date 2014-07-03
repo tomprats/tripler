@@ -36,6 +36,14 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def toggle_admin
+    unless params[:id] == "1"
+      user = User.find_by(id: params[:id])
+      user && user.update_attributes(admin: !user.admin)
+    end
+    redirect_to :back
+  end
+
   private
   def user_params
     params.require(:user).permit(

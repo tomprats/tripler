@@ -19,7 +19,9 @@ Tripler::Application.routes.draw do
     get "/", to: "orders#index"
     get :orders, to: "orders#index"
     get :feedback, to: "feedback#index"
+
     get :users, to: "users#index"
+    get "users/:id/toggle_admin", to: "users#toggle_admin", as: :toggle_admin
 
     get :products, to: "products#index"
     post :products, to: "products#create"
