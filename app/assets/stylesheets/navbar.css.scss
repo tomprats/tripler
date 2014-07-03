@@ -23,7 +23,7 @@ nav {
   &:link { color: #FFFFFF; }    /* unvisited link */
   &:visited { color: #FFFFFF; } /* visited link */
   &:hover { color: #000000; }   /* mouse over link */
-  &:active { color: #0000FF; }  /* as clicked link */
+  &:active { color: #000000; }  /* as clicked link */
 }
 
 @font-face {

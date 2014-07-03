@@ -66,8 +66,20 @@ div#mainpage {
 /* All links aside from nav bar/footer */
 a {
   text-decoration: none;
-  &:link { color: #667C26; }    /* unvisited link */
-  &:visited { color: #667C26; } /* visited link */
+  color: #667C26;
   &:hover { color: #FFFFFF; }   /* mouse over link */
-  &:active { color: #0000FF; }  /* as clicked link */
+  &:active { color: #FFFFFF; }  /* as clicked link */
+}
+
+.margin-bottom-5 {
+  margin-bottom: 5px;
+}
+.margin-top-10 {
+  margin-top: 10px;
+}
+.margin-bottom-10 {
+  margin-bottom: 10px;
+}
+.margin-bottom-20 {
+  margin-bottom: 20px;
 }

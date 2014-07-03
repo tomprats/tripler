@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20140630232328) do
     t.string   "email"
     t.string   "message"
     t.integer  "user_id"
+    t.boolean  "deleted",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -66,13 +67,15 @@ ActiveRecord::Schema.define(version: 20140630232328) do
   create_table "users", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "password"
+    t.string   "email"
+    t.string   "password_digest"
     t.string   "phone_number"
     t.string   "address"
     t.string   "city"
     t.string   "state"
     t.string   "zipcode"
     t.string   "customer_token"
+    t.boolean  "admin",           default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

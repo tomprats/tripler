@@ -1,0 +1,35 @@
+.user-forms-control {
+  left: 10px;
+  top: 10px;
+  position: fixed;
+}
+
+.user-forms {
+  z-index: 1111;
+  width: 400px;
+  left: 10px;
+  top: 50px;
+  position: fixed;
+  padding: 10px 20px;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.8);
+  .fit-input {
+    width: 126px;
+    margin-right: 18px;
+    float: left;
+  }
+  .fit-input-long {
+    width: 270px;
+    margin-right: 18px;
+    float: left;
+  }
+  .fit-btn {
+    width: 72px;;
+    float: left;
+  }
+  .fit-left,
+  .fit-right {
+    display: inline-block;
+    float: left;
+  }
+}

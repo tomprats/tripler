@@ -6,6 +6,8 @@ class CreateFeedback < ActiveRecord::Migration
       t.string :message
       t.integer :user_id
 
+      t.boolean :deleted, default: false
+
       t.timestamps
     end
   end

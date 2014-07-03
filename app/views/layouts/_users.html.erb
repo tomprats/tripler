@@ -1,0 +1,76 @@
+<div class="user-forms-control">
+  <% if current_user %>
+    <%= link_to "Sign Out", sign_out_path, method: :delete, class: "btn btn-green" %>
+  <% else %>
+    <%= link_to "Sign In/Up", "#", class: "btn btn-green toggle-user-forms" %>
+  <% end %>
+</div>
+
+<div class="user-forms hide">
+  <%= link_to "Sign In", "#" %>
+  <%= link_to "x", "#", class: "pull-right toggle-user-forms" %>
+  <div class="clearfix"></div>
+  <div class="sign-in">
+    <%= form_for(:user, url: sign_in_path, remote: true, html: { class: "form-horizontal" }) do |f| %>
+      <div class="margin-top-10 margin-bottom-20">
+        <div class="fit-input">
+          <%= f.email_field :email, { placeholder: "Email", class: "form-control", autofocus:true } %>
+        </div>
+        <div class="fit-input">
+          <%= f.password_field :password, { placeholder: "Password", class: "form-control", autofocus:true } %>
+        </div>
+        <%= f.submit "Sign In", class: "btn btn-green fit-btn" %>
+        <div class="clearfix"></div>
+      </div>
+    <% end %>
+  </div>
+
+  <%= link_to "Sign Up", "#" %>
+  <div class="sign-up">
+    <%= form_for(:user, url: registration_path, remote: true, html: { class: "form-horizontal" }) do |f| %>
+      <div class="margin-top-10">
+        <div class="fit-left">
+          <div class="fit-input">
+            <%= f.text_field :first_name, { placeholder: "First Name", class: "form-control", autofocus:true } %>
+          </div>
+          <div class="fit-input">
+            <%= f.text_field :last_name, { placeholder: "Last Name", class: "form-control", autofocus:true } %>
+          </div>
+          <div class="clearfix margin-bottom-5"></div>
+          <div class="fit-input">
+            <%= f.email_field :email, { placeholder: "Email", class: "form-control", autofocus:true } %>
+          </div>
+          <div class="fit-input">
+            <%= f.text_field :phone_number, { placeholder: "Phone Number", class: "form-control", autofocus:true } %>
+          </div>
+          <div class="clearfix margin-bottom-5"></div>
+          <div class="fit-input">
+            <%= f.password_field :password, { placeholder: "Password", class: "form-control", autofocus:true } %>
+          </div>
+          <div class="fit-input">
+            <%= f.password_field :password_confirmation, { placeholder: "Confirmation", class: "form-control", autofocus:true } %>
+          </div>
+          <div class="clearfix margin-bottom-5"></div>
+          <div class="fit-input-long">
+            <%= f.text_field :address, { placeholder: "Address", class: "form-control", autofocus:true } %>
+          </div>
+          <div class="clearfix margin-bottom-5"></div>
+          <div class="fit-input">
+            <%= f.text_field :city, { placeholder: "City", class: "form-control", autofocus:true } %>
+          </div>
+          <div class="fit-input">
+            <%= f.text_field :state, { placeholder: "State", class: "form-control", autofocus:true } %>
+          </div>
+          <div class="clearfix margin-bottom-5"></div>
+          <div class="fit-input">
+            <%= f.text_field :zipcode, { placeholder: "Zipcode", class: "form-control", autofocus:true } %>
+          </div>
+          <div class="clearfix margin-bottom-5"></div>
+        </div>
+        <div class="fit-right">
+        <%= f.submit "Sign Up", class: "btn btn-green fit-btn" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
