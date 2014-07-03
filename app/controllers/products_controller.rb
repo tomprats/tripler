@@ -1,4 +1,4 @@
-class ItemsController < ApplicationController
+class ProductsController < ApplicationController
   def create
   end
 

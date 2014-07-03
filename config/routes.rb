@@ -7,6 +7,7 @@ Tripler::Application.routes.draw do
     get :custom_orders, to: "pages#custom_orders"
     get :contact, to: "pages#contact"
 
+    get :admin, to: "users#admin"
     post :registration, to: "users#registration"
     post :sign_in, to: "users#sign_in"
     delete :sign_out, to: "users#sign_out"
@@ -15,5 +16,12 @@ Tripler::Application.routes.draw do
   end
 
   constraints(AdminSubdomain) do
+    get "/", to: "orders#index"
+    get :orders, to: "orders#index"
+    get :feedback, to: "feedback#index"
+    get :products, to: "products#index"
+    get :users, to: "users#index"
+
+    delete :sign_out, to: "users#sign_out"
   end
 end

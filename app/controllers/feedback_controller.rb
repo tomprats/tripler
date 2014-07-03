@@ -12,6 +12,10 @@ class FeedbackController < ApplicationController
     end
   end
 
+  def index
+    @feedback = Feedback.all
+  end
+
   private
   def feedback_params
     params.require(:feedback).permit(

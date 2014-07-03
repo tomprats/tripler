@@ -1,5 +1,6 @@
 <div class="user-forms-control">
   <% if current_user %>
+    <%= link_to "Admin", admin_path, class: "btn btn-green" if current_user.admin? %>
     <%= link_to "Sign Out", sign_out_path, method: :delete, class: "btn btn-green" %>
   <% else %>
     <%= link_to "Sign In/Up", "#", class: "btn btn-green toggle-user-forms" %>

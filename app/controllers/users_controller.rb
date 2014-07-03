@@ -1,4 +1,12 @@
 class UsersController < ApplicationController
+  def admin
+    if current_user.admin?
+      redirect_to root_url(token: current_user.password_digest, subdomain: :admin)
+    else
+      redirect_to :back
+    end
+  end
+
   def registration
     user = User.create(user_params)
     if user.valid?
@@ -22,6 +30,10 @@ class UsersController < ApplicationController
   def sign_out
     log_out
     redirect_to root_path
+  end
+
+  def index
+    @users = User.all
   end
 
   private

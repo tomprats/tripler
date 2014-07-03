@@ -22,7 +22,7 @@ class CreateOrders < ActiveRecord::Migration
       t.integer :total_price
       t.integer :quantity
 
-      t.integer :item_id
+      t.integer :product_id
       t.integer :price
       t.string :name
       t.string :description
@@ -31,7 +31,7 @@ class CreateOrders < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :items do |t|
+    create_table :products do |t|
       t.integer :price
       t.string :name
       t.string :description

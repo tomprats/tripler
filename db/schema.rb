@@ -26,20 +26,11 @@ ActiveRecord::Schema.define(version: 20140630232328) do
     t.datetime "updated_at"
   end
 
-  create_table "items", force: true do |t|
-    t.integer  "price"
-    t.string   "name"
-    t.string   "description"
-    t.string   "image"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "order_items", force: true do |t|
     t.integer  "order_id"
     t.integer  "total_price"
     t.integer  "quantity"
-    t.integer  "item_id"
+    t.integer  "product_id"
     t.integer  "price"
     t.string   "name"
     t.string   "description"
@@ -60,6 +51,15 @@ ActiveRecord::Schema.define(version: 20140630232328) do
     t.string   "city"
     t.string   "state"
     t.string   "zipcode"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "products", force: true do |t|
+    t.integer  "price"
+    t.string   "name"
+    t.string   "description"
+    t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

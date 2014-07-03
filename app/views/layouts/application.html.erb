@@ -14,10 +14,15 @@
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
   </head>
-  <body>
-    <%= render partial: "layouts/users" %>
-    <%= render partial: "layouts/navbar" %>
-    <%= yield %>
-    <%= render partial: "layouts/footer" %>
+  <body class="<%= request.subdomain == "admin" ? "admin" : "normal" %>">
+    <% if request.subdomain == "admin" %>
+      <%= render partial: "layouts/admin_navbar" %>
+      <%= yield %>
+    <% else %>
+      <%= render partial: "layouts/users" %>
+      <%= render partial: "layouts/navbar" %>
+      <%= yield %>
+      <%= render partial: "layouts/footer" %>
+    <% end %>
   </body>
 </html>

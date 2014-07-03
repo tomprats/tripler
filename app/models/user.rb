@@ -11,4 +11,7 @@ class User < ActiveRecord::Base
   def admin?
     admin
   end
+  def default_scope
+    order(last_name: :desc, first_name: :desc)
+  end
 end

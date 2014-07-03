@@ -1,0 +1,20 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Message</th>
+      <th>User</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @feedback.each do |feedback| %>
+      <tr>
+        <td><%= feedback.name %></td>
+        <td><%= feedback.email %></td>
+        <td><%= feedback.message %></td>
+        <td><%= feedback.user ? feedback.user.name : "None" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+<table>

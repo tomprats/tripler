@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
 
   def current_user
     User.find(session[:user_id]) if session[:user_id]
+  rescue ActiveRecord::RecordNotFound
+    session[:user_id] = nil
   end
   helper_method :current_user
 
@@ -22,7 +24,17 @@ class ApplicationController < ActionController::Base
 
   def verify_admin
     if request.subdomain.downcase == "admin"
-      redirect_to root_url(subdomain: "") unless current_user && current_user.admin?
+      if params[:token]
+        user = User.find_by(password_digest: params[:token])
+        if user
+          session[:user_id] = user.id
+          redirect_to root_path
+        else
+          redirect_to root_url(subdomain: "")
+        end
+      else
+        redirect_to root_url(subdomain: "") unless current_user && current_user.admin?
+      end
     end
   end
 end

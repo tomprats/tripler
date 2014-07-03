@@ -18,16 +18,6 @@
   @include button-variant(white, #667C26, #667C26);
 }
 
-body {
-  margin-left: auto;
-  margin-right: auto;
-  background-image: image-url("main.jpg");
-  background-repeat: no-repeat;
-  background-position: center top;
-  background-color: #000000;
-  color: #FFFFFF;
-}
-
 span.highlight { color: yellow; }
 
 .clear { clear: both; }
@@ -44,6 +34,24 @@ a, img {
 
 input, textarea {
   color: black;
+}
+
+/* All links aside from nav bar/footer */
+a {
+  text-decoration: none;
+  color: #667C26;
+  &:hover { color: #FFFFFF; }   /* mouse over link */
+  &:active { color: #FFFFFF; }  /* as clicked link */
+}
+
+body.normal {
+  margin-left: auto;
+  margin-right: auto;
+  background-image: image-url("main.jpg");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-color: #000000;
+  color: #FFFFFF;
 }
 
 /* Main Content */
@@ -66,14 +74,6 @@ div#mainpage {
   width: 736px;
   margin-left: auto;
   margin-right: auto;
-}
-
-/* All links aside from nav bar/footer */
-a {
-  text-decoration: none;
-  color: #667C26;
-  &:hover { color: #FFFFFF; }   /* mouse over link */
-  &:active { color: #FFFFFF; }  /* as clicked link */
 }
 
 .margin-bottom-5 {
