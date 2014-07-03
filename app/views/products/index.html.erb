@@ -16,8 +16,8 @@
         <td><%= product.price %></td>
         <td><%= product.image %></td>
         <td>
-          <%= link_to "Edit", "#", class: "admin-link", data: { id: product.id } %> | 
-          <%= link_to "Delete", "#", class: "admin-link", data: { id: product.id } %>
+          <%= link_to "Edit", "#", class: "edit-product admin-link", data: { id: product.id } %> | 
+          <%= link_to "Delete", product_path(id: product.id), method: :delete, class: "admin-link" %>
         </td>
       </tr>
     <% end %>
@@ -26,3 +26,6 @@
 
 <%= link_to "Add Product", "#", class: "create-product admin-create-btn" %>
 <%= render partial: "products/form" %>
+<% @products.each do |product| %>
+  <%= render partial: "products/edit_form", locals: { product: product } %>
+<% end %>

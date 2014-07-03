@@ -19,9 +19,12 @@ Tripler::Application.routes.draw do
     get "/", to: "orders#index"
     get :orders, to: "orders#index"
     get :feedback, to: "feedback#index"
+    get :users, to: "users#index"
+
     get :products, to: "products#index"
     post :products, to: "products#create"
-    get :users, to: "users#index"
+    put "products/:id", to: "products#update", as: :product
+    delete "products/:id", to: "products#destroy"
 
     delete :sign_out, to: "users#sign_out"
   end

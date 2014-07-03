@@ -13,9 +13,19 @@ class ProductsController < ApplicationController
   end
 
   def update
+    product = Product.find_by(id: params[:id])
+    if product && product.update_attributes(product_params)
+      render json: { status: 200 }
+    elsif product.nil?
+      render json: { status: 500, message: ["Product could not be updated"] }
+    else
+      render json: { status: 400, message: product.errors.full_messages }
+    end
   end
 
-  def delete
+  def destroy
+    Product.find_by(id: params[:id]).try(:destroy)
+    redirect_to :back
   end
 
   private

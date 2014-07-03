@@ -3,7 +3,7 @@ $(document).ready(function() {
     e.preventDefault();
     e.stopPropagation();
 
-    $userForms = $(".user-forms");
+    var $userForms = $(".user-forms");
 
     if($userForms.hasClass("hide")) {
       $userForms.removeClass("hide");
