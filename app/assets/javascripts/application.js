@@ -11,11 +11,12 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery.form
 //= require bootstrap
-//= require turbolinks
 //= require_tree .
+//= require turbolinks
 
 $(document).on("click", ".prevent-default", function(e) {
   e.preventDefault();
