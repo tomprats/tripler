@@ -13,6 +13,7 @@
  */
 @import "bootstrap";
 
+.green { color: #667C26; }
 .btn-green {
   @include button-variant(white, #667C26, #667C26);
 }
@@ -39,6 +40,10 @@ h3 { text-align: center; }
 
 a, img {
   border:none;
+}
+
+input, textarea {
+  color: black;
 }
 
 /* Main Content */

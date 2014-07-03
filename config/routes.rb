@@ -10,9 +10,10 @@ Tripler::Application.routes.draw do
     post :registration, to: "users#registration"
     post :sign_in, to: "users#sign_in"
     delete :sign_out, to: "users#sign_out"
+
+    post :feedback, to: "feedback#create"
   end
 
   constraints(AdminSubdomain) do
-    resources :profile # matches if there is a subdomain
   end
 end
