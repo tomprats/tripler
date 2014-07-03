@@ -44,6 +44,11 @@ class UsersController < ApplicationController
     redirect_to :back
   end
 
+  def return
+    session[:user_id] = nil
+    redirect_to root_url(subdomain: nil)
+  end
+
   private
   def user_params
     params.require(:user).permit(

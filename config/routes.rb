@@ -4,7 +4,7 @@ Tripler::Application.routes.draw do
     get :home, to: "pages#home"
     get :about, to: "pages#about"
     get :jerky, to: "pages#jerky"
-    get :custom_orders, to: "pages#custom_orders"
+    get :locations, to: "pages#locations"
     get :contact, to: "pages#contact"
 
     get :admin, to: "users#admin"
@@ -28,6 +28,6 @@ Tripler::Application.routes.draw do
     put "products/:id", to: "products#update", as: :product
     delete "products/:id", to: "products#destroy"
 
-    delete :sign_out, to: "users#sign_out"
+    delete :return, to: "users#return"
   end
 end

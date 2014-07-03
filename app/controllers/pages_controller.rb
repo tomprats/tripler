@@ -6,9 +6,10 @@ class PagesController < ApplicationController
   end
 
   def jerky
+    @products = Product.all
   end
 
-  def custom_orders
+  def locations
   end
 
   def contact

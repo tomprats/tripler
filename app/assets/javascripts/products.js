@@ -20,16 +20,18 @@ $(document).ready(function() {
     return false;
   });
 
-  $(document).on("ajax:success", ".product-form", function(e, data) {
-    if(data.status == 200) {
-      location.reload();
-    } else {
-      $(".form-errors").remove();
-      var div = ""
-      $(data.message).each(function() {
-        div += "<div class=\"form-errors margin-bottom-5\">" + this + "</div>";
-      });
-      $(".product-form form").before($(div));
+  $(".product-form form").ajaxForm({
+    success: function(data) {
+      if(data.status == 200) {
+        location.reload();
+      } else {
+        $(".form-errors").remove();
+        var div = ""
+        $(data.message).each(function() {
+          div += "<div class=\"form-errors margin-bottom-5\">" + this + "</div>";
+        });
+        $(".product-form form").before($(div));
+      }
     }
   });
 
@@ -56,16 +58,18 @@ $(document).ready(function() {
     return false;
   });
 
-  $(document).on("ajax:success", ".edit-product-form", function(e, data) {
-    if(data.status == 200) {
-      location.reload();
-    } else {
-      $(".form-errors").remove();
-      var div = ""
-      $(data.message).each(function() {
-        div += "<div class=\"form-errors margin-bottom-5\">" + this + "</div>";
-      });
-      $(".edit-product-form form").before($(div));
+  $(".edit-product-form form").ajaxForm({
+    success: function(data) {
+      if(data.status == 200) {
+        location.reload();
+      } else {
+        $(".form-errors").remove();
+        var div = ""
+        $(data.message).each(function() {
+          div += "<div class=\"form-errors margin-bottom-5\">" + this + "</div>";
+        });
+        $(".edit-product-form form").before($(div));
+      }
     }
   });
 });

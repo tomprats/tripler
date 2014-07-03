@@ -1,27 +1,14 @@
-.edit-product-form,
-.product-form {
-  z-index: 1111;
-  width: 400px;
-  top: 50px;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  position: fixed;
-  padding: 10px 20px;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #FFFFFF;
-  .input-left {
-    width: 175px;
+.product-box {
+  .product-name {
     float: left;
   }
-  .input-right {
-    width: 175px;
+  .product-price {
     float: right;
   }
-  .input-full {
-    width: 360px;;
-    float: left;
+  .product-image {
+    width: 100%;
+  }
+  .product-description {
+    text-align: center;
   }
 }
