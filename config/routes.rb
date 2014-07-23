@@ -13,6 +13,10 @@ Tripler::Application.routes.draw do
     delete :sign_out, to: "users#sign_out"
 
     post :feedback, to: "feedback#create"
+
+    post :update_cart, to: "orders#update_cart"
+    delete :empty_cart, to: "orders#empty_cart"
+    get :review_cart, to: "orders#review_cart"
   end
 
   constraints(AdminSubdomain) do

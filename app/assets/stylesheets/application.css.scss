@@ -76,6 +76,18 @@ div#mainpage {
   margin-right: auto;
 }
 
+.padding-10 {
+  padding: 10px;
+}
+.padding-left-10 {
+  padding-left: 10px;
+}
+.padding-right-10 {
+  padding-right: 10px;
+}
+.margin-0 {
+  margin: 0;
+}
 .margin-bottom-5 {
   margin-bottom: 5px;
 }
@@ -85,6 +97,18 @@ div#mainpage {
 .margin-bottom-10 {
   margin-bottom: 10px;
 }
+.margin-20 {
+  margin: 20px;
+}
+.margin-top-20 {
+  margin-top: 20px;
+}
 .margin-bottom-20 {
   margin-bottom: 20px;
+}
+
+@media (max-width: $screen-md-min) {
+  .padding-0-mobile {
+    padding: 0;
+  }
 }

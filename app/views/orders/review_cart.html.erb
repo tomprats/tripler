@@ -1,0 +1,154 @@
+<div id="secondaryimage">
+  <%= image_tag "shop.png" %>
+</div>
+
+<div id="products">
+  <div id="mainpage">
+    <h1>Shop</h1>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Quantitity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cart.each do |key, value| %>
+          <% product = Product.find(key) %>
+          <tr>
+            <td><%= product.name %></td>
+            <td><%= product.description %></td>
+            <td><%= product.price %></td>
+            <td><%= value %></td>
+            <td><%= product.price * value.to_i %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td><b>Shipping</b></td>
+          <td>Enter your zipcode below</td>
+          <td>TBD</td>
+          <td>1</td>
+          <td class="shipping-price">TBD</td>
+        </tr>
+      </tbody>
+    </table>
+    <%= form_for :order, html: { id: "card_form", class: "form-horizontal margin-20" } do |f| %>
+      <div class="row">
+        <div class="col-md-6">
+          <h3>Billing Details</h3>
+          <div class="row padding-right-10 padding-0-mobile">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <%= f.label :name, "Name of Card Holder", class: "control-label" %>
+                    <%= f.text_field :name, { value: current_user.try(:name), class: "form-control" } %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <%= f.label :number, "Card Number", class: "control-label" %>
+                    <%= f.text_field :number, { class: "form-control" } %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group padding-right-10 padding-0-mobile">
+                    <%= f.label :exp_month, "Exp. Month", class: "control-label" %>
+                    <%= select_month nil, { use_month_numbers: true }, { name: "card[exp_month]", id: "card_exp_month", class: "form-control col-md-2" } %>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group padding-left-10 padding-0-mobile">
+                    <%= f.label :exp_year, " Exp. Year", class: "control-label" %>
+                    <%= select_year nil, { start_year: Date.today.year, end_year: Date.today.year+15 }, { name: "card[exp_year]", id: "card_exp_year", class: "form-control" } %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <%= f.label :cvc, "CVV/CVC (3-4 Digit Number on the back of the card)", class: "control-label" %>
+                    <%= f.text_field :cvc, { class: "form-control" } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h3>Shipping Details</h3>
+          <div class="row padding-left-10 padding-0-mobile">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group padding-right-10 padding-0-mobile">
+                    <%= f.label :first_name, "First Name", class: "control-label" %>
+                    <%= f.text_field :first_name, { value: current_user.try(:first_name), class: "form-control" } %>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group padding-left-10 padding-0-mobile">
+                    <%= f.label :last_name, "Last Name", class: "control-label" %>
+                    <%= f.text_field :last_name, { value: current_user.try(:last_name), class: "form-control" } %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <%= f.label :address, class: "control-label" %>
+                    <%= f.text_field :address, { class: "form-control" } %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group padding-right-10 padding-0-mobile">
+                    <%= f.label :city, class: "control-label" %>
+                    <%= f.text_field :city, { class: "form-control" } %>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group padding-left-10 padding-0-mobile">
+                    <%= f.label :state, class: "control-label" %>
+                    <%= f.text_field :state, { class: "form-control" } %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group padding-right-10 padding-0-mobile">
+                    <%= f.label :zipcode, class: "control-label" %>
+                    <%= f.text_field :zipcode, { class: "form-control" } %>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group padding-left-10 padding-0-mobile">
+                    <%= f.label :phone_number, "Phone Number", class: "control-label" %>
+                    <%= f.text_field :phone_number, { class: "form-control" } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row margin-top-20">
+        <div class="col-md-6 text-center">
+          <%= link_to "Empty Cart", empty_cart_path, method: :delete, class: "btn btn-green" %>
+          <%= link_to "Purchase", "#", class: "btn btn-green purchase" %>
+        </div>
+        <div class="col-md-6">
+          <h3 class="margin-0">Total: $<span class="total"><%= @total %></span></h3>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
