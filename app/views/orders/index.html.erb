@@ -1,0 +1,26 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Phone Number</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zipcode</th>
+      <th>Total Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= "#{order.first_name} #{order.last_name}" %></td>
+        <td><%= order.phone_number %></td>
+        <td><%= order.address %></td>
+        <td><%= order.city %></td>
+        <td><%= order.state %></td>
+        <td><%= order.zipcode %></td>
+        <td><%= order.total_price %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

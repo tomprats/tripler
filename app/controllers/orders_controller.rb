@@ -1,3 +1,6 @@
+require 'active_shipping'
+include ActiveMerchant::Shipping
+
 class OrdersController < ApplicationController
   def update_cart
     cart = params[:cart].delete_if { |key, value| value == "0" }
@@ -5,8 +8,10 @@ class OrdersController < ApplicationController
     cart.each do |key, value|
       total += Product.find(key).price * value.to_i
     end
-    session[:total] = total
     session[:cart] = cart
+    session[:total] = total
+    session[:rates] = nil
+    session[:shipping] = nil
 
     render json: { status: 200, href: review_cart_path }
   end
@@ -14,6 +19,8 @@ class OrdersController < ApplicationController
   def empty_cart
     session[:cart] = nil
     session[:total] = nil
+    session[:rates] = nil
+    session[:shipping] = nil
 
     redirect_to jerky_path
   end
@@ -23,12 +30,24 @@ class OrdersController < ApplicationController
 
     @cart = session[:cart] || {}
     @total = session[:total]
+
+    # binding.pry
+  end
+
+  def find_shipping
+    rates = Order.find_shipping(session[:items], params[:zipcode])
+    session[:rates] = rates.rates.collect do |rate|
+      {
+        price: rate.total_price,
+        name: rate.service_name,
+      }
+    end
   end
 
   def update_shipping
-    params[:zipcode]
+    session[:shipping] = nil
 
-    render json: { status: 200, price: price }
+    # render json: { status: 200, price: price }
   end
 
   def purchase

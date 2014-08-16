@@ -18,3 +18,5 @@
 public/product
 public/products
 public/uploads
+
+config/local_variables.rb
