@@ -15,14 +15,22 @@ nav {
   font-size: 14px;
   font-family: Truckstyle, TruckstyleEI;
   display: block;
-  background-color: #667C26;
+  background-color: rgb(102, 124, 38);
+  background-color: rgba(102, 124, 38, 0.6);
 }
-#nav a {
+nav a {
   margin: 1em;
   text-decoration: none;
   color: #FFFFFF;
   &:hover { color: #000000; }   /* mouse over link */
   &:active { color: #000000; }  /* as clicked link */
+}
+.pages.home nav .home-link,
+.pages.about nav .about-link,
+.pages.jerky nav .jerky-link,
+.pages.contact nav .contact-link,
+.pages.locations nav .locations-link {
+  color: black;
 }
 
 @font-face {

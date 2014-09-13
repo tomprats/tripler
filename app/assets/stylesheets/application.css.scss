@@ -32,6 +32,10 @@ a, img {
   border:none;
 }
 
+p {
+  margin: 20px 0;
+}
+
 input, textarea {
   color: black;
 }
@@ -60,22 +64,24 @@ div#secondaryimage {
   text-align: center;
 }
 div#mainpage {
-  width: 776px;
+  width: 600px;
   margin-left: auto;
   margin-right: auto;
-  border: 3px solid white;
-  border-radius: 10px;
-  padding: 20px;
   text-align: left;
 }
 
 /* Footer */
 #footer {
-  width: 736px;
+  width: 600px;
   margin-left: auto;
   margin-right: auto;
 }
 
+.list {
+  display: inline-block;
+  text-align: left;
+  padding-left: 10px;
+}
 .padding-10 {
   padding: 10px;
 }
