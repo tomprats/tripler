@@ -17,6 +17,8 @@ Tripler::Application.routes.draw do
     post :update_cart, to: "orders#update_cart"
     delete :empty_cart, to: "orders#empty_cart"
     get :review_cart, to: "orders#review_cart"
+    post :update_shipping, to: "orders#update_shipping"
+    post :purchase, to: "orders#purchase"
   end
 
   constraints(AdminSubdomain) do

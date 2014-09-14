@@ -1,7 +1,3 @@
-<div id="secondaryimage">
-  <%= image_tag "shop.png" %>
-</div>
-
 <div id="products">
   <div id="mainpage">
     <h1>Shop</h1>
@@ -18,20 +14,20 @@
       <tbody>
         <% @cart.each do |key, value| %>
           <% product = Product.find(key) %>
-          <tr>
+          <tr data-id="<%= product.id %>">
             <td><%= product.name %></td>
             <td><%= product.description %></td>
-            <td><%= product.price %></td>
-            <td><%= value %></td>
-            <td><%= product.price * value.to_i %></td>
+            <td>$<%= number_with_precision(product.price / 100.0, precision: 2) %></td>
+            <td class="product-quantity text-center"><%= select_tag(:quantity, options_for_select(0..50, value)) %></td>
+            <td class="product-total">$<%= number_with_precision(product.price * value.to_i / 100.0, precision: 2) %></td>
           </tr>
         <% end %>
         <tr>
           <td><b>Shipping</b></td>
-          <td>Enter your zipcode below</td>
-          <td>TBD</td>
-          <td>1</td>
-          <td class="shipping-price">TBD</td>
+          <td>Enter your address below</td>
+          <td class="shipping-total">TBD</td>
+          <td class="text-center">1</td>
+          <td class="shipping-total">TBD</td>
         </tr>
       </tbody>
     </table>
@@ -74,7 +70,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <%= f.label :cvc, "CVV/CVC (3-4 Digit Number on the back of the card)", class: "control-label" %>
+                    <%= f.label :cvc, "CVV/CVC (3-4 Digit Number)", class: "control-label" %>
                     <%= f.text_field :cvc, { class: "form-control" } %>
                   </div>
                 </div>
@@ -143,10 +139,10 @@
       <div class="row margin-top-20">
         <div class="col-md-6 text-center">
           <%= link_to "Empty Cart", empty_cart_path, method: :delete, class: "btn btn-green" %>
-          <%= link_to "Calculate Shipping", "#", class: "btn btn-green shipping" %>
+          <%= link_to "Purchase", "#", class: "btn btn-green purchase" %>
         </div>
         <div class="col-md-6">
-          <h3 class="margin-0">Total: $<span class="total"><%= @total %></span></h3>
+          <h3 class="margin-0">Total: $<span class="total"><%= number_with_precision(@total / 100.0, precision: 2) %></span></h3>
         </div>
       </div>
     <% end %>
