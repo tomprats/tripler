@@ -1,0 +1,10 @@
+<div class="alert alert-danger alerts flash hide">
+  <a class="close" data-dismiss="alert">×</a>
+  <span class="replace"></span>
+</div>
+<% if flash[:alert] %>
+  <div class="alert alert-green flash">
+    <a class="close" data-dismiss="alert">×</a>
+    <span><%= flash[:alert] %></span>
+  </div>
+<% end %>

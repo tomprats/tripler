@@ -3,9 +3,9 @@ $(document).ready(function() {
     var total = 0;
     $(".product-quantity select").each(function() {
       var $this = $(this);
-      total += $this.val() * parseInt($this.closest(".product-box").find(".price").text());
+      total += $this.val() * parseFloat($this.closest(".product-box").find(".price").text());
     });
-    $(".total").text((total/100).toFixed(2));
+    $(".total").text((total).toFixed(2));
   });
 
   $(".jerky .checkout").click(function(e) {
@@ -40,5 +40,28 @@ $(document).ready(function() {
         $(".total").text((data.total/100).toFixed(2))
       });
     }
+  });
+
+  $(document).on("click", ".review_cart .purchase", function(e) {
+    e.preventDefault();
+    // Disable button first
+    Stripe.setPublishableKey($(".stripe-data").data("key"));
+    Stripe.card.createToken({
+      number: $("#card_number").val(),
+      cvc: $("#card_cvc").val(),
+      exp_month: $("#card_exp_month").val(),
+      exp_year: $("#card_exp_year").val()
+    }, function(status, response) {
+      if(response.error) {
+        alert(response.error.message);
+      } else {
+        if(confirm("Your credit card will be charged for $" + $(".total").text() + ".")) {
+          $form = $("#purchase-order");
+          $form.append($('<input type="hidden" name="card_token" />').val(response.id));
+          $form.get(0).submit();
+        }
+      }
+    });
+    return false;
   });
 });

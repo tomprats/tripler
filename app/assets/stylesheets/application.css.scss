@@ -12,10 +12,11 @@
  *= require_tree .
  */
 @import "bootstrap";
+@import "variables";
 
-.green { color: #667C26; }
+.green { color: $green; }
 .btn-green {
-  @include button-variant(white, #667C26, #667C26);
+  @include button-variant(white, $green, $green);
 }
 
 span.highlight { color: yellow; }
@@ -56,6 +57,19 @@ body.normal {
   background-position: center top;
   background-color: #000000;
   color: #FFFFFF;
+}
+
+// Flash
+.alert {
+  background-color: $green;
+}
+.flash {
+  position: fixed;
+  z-index: 1040;
+  left: 0;
+  top: 0;
+  right: 0;
+  padding: 11px;
 }
 
 /* Main Content */

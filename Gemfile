@@ -10,6 +10,7 @@ gem "carrierwave"
 gem "cloudinary"
 gem "bcrypt", "~> 3.1.7"
 gem "active_shipping"
+gem "stripe"
 
 # Frontend
 gem "sass-rails", "~> 4.0.2"

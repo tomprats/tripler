@@ -4,6 +4,20 @@ class Order < ActiveRecord::Base
 
   accepts_nested_attributes_for :order_items
 
+  validates_presence_of(
+    :total_price,
+    :description,
+    :first_name,
+    :last_name,
+    :phone_number,
+    :address,
+    :city,
+    :state,
+    :zipcode,
+    :shipping,
+    :shipping_total
+  )
+
   def self.find_shipping(items, destination_zipcode)
     # Create package(s) out of items
     packages = [

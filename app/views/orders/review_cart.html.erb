@@ -31,9 +31,9 @@
         </tr>
       </tbody>
     </table>
-    <%= form_for :order, html: { id: "card_form", class: "form-horizontal margin-20" } do |f| %>
-      <div class="row">
-        <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-6">
+        <%= form_for :card, html: { id: "card-form", class: "form-horizontal margin-20" } do |f| %>
           <h3>Billing Details</h3>
           <div class="row padding-right-10 padding-0-mobile">
             <div class="col-md-12">
@@ -77,8 +77,10 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-6">
+        <% end %>
+      </div>
+      <div class="col-md-6">
+        <%= form_for :order, url: purchase_path, html: { id: "purchase-order", class: "form-horizontal margin-20" } do |f| %>
           <h3>Shipping Details</h3>
           <div class="row padding-left-10 padding-0-mobile">
             <div class="col-md-12">
@@ -134,17 +136,20 @@
               </div>
             </div>
           </div>
-        </div>
+        <% end %>
       </div>
-      <div class="row margin-top-20">
-        <div class="col-md-6 text-center">
-          <%= link_to "Empty Cart", empty_cart_path, method: :delete, class: "btn btn-green" %>
-          <%= link_to "Purchase", "#", class: "btn btn-green purchase" %>
-        </div>
-        <div class="col-md-6">
-          <h3 class="margin-0">Total: $<span class="total"><%= number_with_precision(@total / 100.0, precision: 2) %></span></h3>
-        </div>
+    </div>
+    <div class="row margin-top-20">
+      <div class="col-md-6 text-center">
+        <%= link_to "Empty Cart", empty_cart_path, method: :delete, class: "btn btn-green" %>
+        <%= link_to "Purchase", "#", class: "btn btn-green purchase" %>
       </div>
-    <% end %>
+      <div class="col-md-6">
+        <h3 class="margin-0">Total: $<span class="total"><%= number_with_precision(@total / 100.0, precision: 2) %></span></h3>
+      </div>
+    </div>
   </div>
 </div>
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<div class="stripe-data hide" data-key="<%= ENV["STRIPE_PUBLIC"] %>"></div>

@@ -69,29 +69,49 @@ class OrdersController < ApplicationController
   end
 
   def purchase
-    if current_user
-      customer_token = Stripe.customer_token(charge_token: session[:charge_token])
-      current_user.update_attributes(customer_token: customer_token)
-      # Charge customer token
-    else
-      # Charge charge token
-    end
-    # Take shipping into account before charging
+    Stripe.api_key = ENV["STRIPE_SECRET"]
+    card_token = params[:card_token]
+    charge_token = nil
+    charge_description = "Triple R Farms delicious Jerky infused with Cowboy Coffee."
 
-    @order = Order.create(
-      charge_token: session[:charge_token],
-      description: "Triple R Farms delicious Jerky infused with Cowboy Coffee.",
+    @order = Order.new(order_params.merge!(
+      description: charge_description,
       shipping: session[:shipping],
       shipping_total: session[:shipping_total],
+      total_price: session[:total],
       user_id: current_user.try(:id),
-      order_items: session[:order_items]
-    )
+      order_items: order_items
+    ))
+
     if @order.valid?
-      session[:order_id] = order.id
+      if current_user
+        customer_token = Stripe::Customer.create(
+          card: card_token,
+          description: "Customer for #{current_user.name} (id: #{current_user.id})"
+        ).id
+        current_user.update_attributes(customer_token: customer_token)
+        charge_token = Stripe::Charge.create(
+          amount: session[:total],
+          currency: "usd",
+          customer: customer_token,
+          description: charge_description
+        ).id
+      else
+        charge_token = Stripe::Charge.create(
+          amount: session[:total],
+          currency: "usd",
+          card: card_token,
+          description: charge_description
+        ).id
+      end
+      @order.charge_token = charge_token
+      @order.save!
+
+      session[:order_id] = @order.id
     else
-      redirect_to :back, alert: @order.errors.full_messages
+      redirect_to :back, alert: @order.errors.full_messages.join(", ")
     end
-  rescue Stripe::Error => e
+  rescue Stripe::StripeError => e
     puts e.message
     redirect_to :back, alert: e.message
   end
@@ -103,7 +123,6 @@ class OrdersController < ApplicationController
   private
   def order_params
     params.require(:order).permit(
-      :charge_token,
       :first_name,
       :last_name,
       :phone_number,
@@ -112,6 +131,21 @@ class OrdersController < ApplicationController
       :state,
       :zipcode
     )
+  end
+
+  def order_items
+    session[:cart].collect do |key, value|
+      product = Product.find(key)
+      OrderItem.new(
+        quantity: value,
+        price: product.price,
+        total_price: value.to_i * product.price,
+        product_id: product.id,
+        name: product.name,
+        description: product.description,
+        image: product.image.url
+      )
+    end
   end
 
   def calculate_shipping
