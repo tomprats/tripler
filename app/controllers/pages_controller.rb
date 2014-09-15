@@ -8,7 +8,7 @@ class PagesController < ApplicationController
   def jerky
     @products = Product.all
     @cart = session[:cart] || {}
-    @total = session[:total] || 0
+    @total = session[:cart_total] || 0
   end
 
   def locations

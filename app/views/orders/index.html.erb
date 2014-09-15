@@ -1,25 +1,25 @@
 <table class="table table-bordered">
   <thead>
     <tr>
+      <th>Date</th>
       <th>Name</th>
       <th>Phone Number</th>
-      <th>Address</th>
-      <th>City</th>
-      <th>State</th>
-      <th>Zipcode</th>
+      <th>Shipping</th>
+      <th>Shipping Price</th>
       <th>Total Price</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <% @orders.each do |order| %>
       <tr>
-        <td><%= "#{order.first_name} #{order.last_name}" %></td>
+        <td><%= order.date %></td>
+        <td><%= order.name %></td>
         <td><%= order.phone_number %></td>
-        <td><%= order.address %></td>
-        <td><%= order.city %></td>
-        <td><%= order.state %></td>
-        <td><%= order.zipcode %></td>
-        <td><%= order.total_price %></td>
+        <td><%= order.shipping %></td>
+        <td>$<%= number_with_precision(order.shipping_total / 100, precision: 2) %></td>
+        <td>$<%= number_with_precision(order.total_price / 100, precision: 2) %></td>
+        <td><%= link_to "View", order_path(order.id) %></td>
       </tr>
     <% end %>
   </tbody>

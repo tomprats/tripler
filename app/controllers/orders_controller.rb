@@ -1,4 +1,4 @@
-require 'active_shipping'
+require "active_shipping"
 include ActiveMerchant::Shipping
 
 class OrdersController < ApplicationController
@@ -107,7 +107,17 @@ class OrdersController < ApplicationController
       @order.charge_token = charge_token
       @order.save!
 
-      session[:order_id] = @order.id
+      session[:orders] ||= []
+      session[:orders].push(@order.id)
+      session[:cart] = nil
+      session[:cart_total] = nil
+      session[:rates] = nil
+      session[:shipping] = nil
+      session[:shipping_total] = nil
+      session[:shipping_zipcode] = nil
+      session[:total] = nil
+
+      redirect_to purchased_path
     else
       redirect_to :back, alert: @order.errors.full_messages.join(", ")
     end
@@ -118,6 +128,10 @@ class OrdersController < ApplicationController
 
   def index
     @orders = Order.all
+  end
+
+  def show
+    @order = Order.find(params[:id])
   end
 
   private

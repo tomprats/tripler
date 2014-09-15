@@ -19,11 +19,13 @@ Tripler::Application.routes.draw do
     get :review_cart, to: "orders#review_cart"
     post :update_shipping, to: "orders#update_shipping"
     post :purchase, to: "orders#purchase"
+    get :purchased, to: "orders#purchased"
   end
 
   constraints(AdminSubdomain) do
     get "/", to: "orders#index"
     get :orders, to: "orders#index"
+    get "order/:id", to: "orders#show", as: :order
     get :feedback, to: "feedback#index"
 
     get :users, to: "users#index"

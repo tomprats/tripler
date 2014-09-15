@@ -18,6 +18,14 @@ class Order < ActiveRecord::Base
     :shipping_total
   )
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
+  def date
+    created_at.strftime("%m/%d/%Y")
+  end
+
   def self.find_shipping(items, destination_zipcode)
     # Create package(s) out of items
     packages = [

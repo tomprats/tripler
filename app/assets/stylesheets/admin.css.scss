@@ -1,3 +1,4 @@
+@import "variables";
 .return-admin {
   right: 0;
 }
@@ -20,4 +21,11 @@
 .admin-link {
   &:hover { color: #000000; }   /* mouse over link */
   &:active { color: #000000; }  /* as clicked link */
+}
+
+.admin td a {
+  text-decoration: none;
+  color: $green;
+  &:hover { color: black; }   /* mouse over link */
+  &:active { color: black; }  /* as clicked link */
 }
