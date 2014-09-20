@@ -30,6 +30,7 @@ class ProductsController < ApplicationController
 
   private
   def product_params
+    params[:product][:price] = (params[:product][:price].to_f * 100).to_i if params[:product][:price]
     params.require(:product).permit(
       :name,
       :description,

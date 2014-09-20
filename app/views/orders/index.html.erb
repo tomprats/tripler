@@ -17,8 +17,8 @@
         <td><%= order.name %></td>
         <td><%= order.phone_number %></td>
         <td><%= order.shipping %></td>
-        <td>$<%= number_with_precision(order.shipping_total / 100, precision: 2) %></td>
-        <td>$<%= number_with_precision(order.total_price / 100, precision: 2) %></td>
+        <td>$<%= number_with_precision(order.shipping_total / 100.0, precision: 2) %></td>
+        <td>$<%= number_with_precision(order.total_price / 100.0, precision: 2) %></td>
         <td><%= link_to "View", order_path(order.id) %></td>
       </tr>
     <% end %>

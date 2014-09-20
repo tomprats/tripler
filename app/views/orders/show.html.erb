@@ -15,8 +15,8 @@
       <td><%= @order.name %></td>
       <td><%= @order.phone_number %></td>
       <td><%= @order.shipping %></td>
-      <td>$<%= number_with_precision(@order.shipping_total / 100, precision: 2) %></td>
-      <td>$<%= number_with_precision(@order.total_price / 100, precision: 2) %></td>
+      <td>$<%= number_with_precision(@order.shipping_total / 100.0, precision: 2) %></td>
+      <td>$<%= number_with_precision(@order.total_price / 100.0, precision: 2) %></td>
     </tr>
   </tbody>
 </table>
@@ -63,9 +63,9 @@
       <tr>
         <td><%= item.name %></td>
         <td><%= item.description %></td>
-        <td>$<%= number_with_precision(item.price / 100, precision: 2) %></td>
+        <td>$<%= number_with_precision(item.price / 100.0, precision: 2) %></td>
         <td><%= item.quantity %></td>
-        <td>$<%= number_with_precision(item.total_price / 100, precision: 2) %></td>
+        <td>$<%= number_with_precision(item.total_price / 100.0, precision: 2) %></td>
       </tr>
     <% end %>
   </tbody>
