@@ -1,10 +1,19 @@
 $(document).ready(function() {
   $(".jerky .product-quantity select").on("change", function() {
+    var quantity = 0;
     var total = 0;
     $(".product-quantity select").each(function() {
       var $this = $(this);
+      quantity += parseInt($this.val());
       total += $this.val() * parseFloat($this.closest(".product-box").find(".price").text());
     });
+    $(".packs").text(Math.floor(quantity/8));
+    packless = quantity%8;
+    if(packless == 0) {
+      $(".packless").text(0);
+    } else {
+      $(".packless").text(8 - quantity%8);
+    }
     $(".total").text((total).toFixed(2));
   });
 
@@ -28,6 +37,15 @@ $(document).ready(function() {
     var product = { quantity: quantity, id: id }
     $.post("/update_cart", { product: product }, function(data) {
       $this.parent().siblings(".product-total").text("$" + (data.product_total/100).toFixed(2));
+      if(data.shipping) {
+        $(".shipping-total").text("$" + (data.shipping_total/100).toFixed(2))
+      }
+      $(".packs").text(data.packs)
+      if(data.packless == 0) {
+        $(".packless").text(0);
+      } else {
+        $(".packless").text(8 - data.packless);
+      }
       $(".total").text((data.total/100).toFixed(2))
     });
   });

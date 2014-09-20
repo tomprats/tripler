@@ -2,16 +2,30 @@
   <div id="mainpage">
     <h1>Shop</h1>
     <div class="row">
+      <p class="text-center">
+        Our products are shipped in packs of 8 to maximize spacial efficiency.
+        <br>For bulk orders call 717-542-4022 or fill out our <%= link_to "contact form", contact_path %> and we'll get back to you soon.
+      </p>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="text-center">
+          <span class="padding-right-40">Packs: <span class="packs"><%= @packs %></span></span>
+          <span>Quantity to complete a pack: <span class="packless"><%= @packless.zero? ? 0 : 8 - @packless  %></span></span>
+        </h4>
+      </div>
+    </div>
+    <div class="row">
       <% @products.each do |product| %>
         <div class="col-md-6 product-box" data-id="<%= product.id %>">
           <div class="row">
+            <h3 class="product-name"><%= product.name %></h3>
             <div class="col-md-6">
               <%= image_tag product.image.url, class: "product-image" %>
             </div>
             <div class="col-md-6">
-              <div class="product-name">Name: <%= product.name %></div>
+              <div class="product-description"><%= product.description %></div>
               <div class="product-price">Price: $<span class="price"><%= number_with_precision(product.price/100.0, precision: 2) %></span></div>
-              <div class="product-description">Description: <%= product.description %></div>
               <div class="product-quantity">Quantity: <%= select_tag(:quantity, options_for_select(0..50, @cart[product.id.to_s])) %></div>
             </div>
           </div>
@@ -27,5 +41,23 @@
         <h3 class="margin-0">Total: $<span class="total"><%= number_with_precision(@total/100.0, precision: 2) %></span></h3>
       </div>
     </div>
+    <% unless @coming_soon.empty? %>
+      <h1>Coming Soon</h1>
+      <div class="row">
+        <% @coming_soon.each do |product| %>
+          <div class="col-md-6 product-box">
+            <div class="row">
+              <h3 class="product-name"><%= product.name %></h3>
+              <div class="col-md-6">
+                <%= image_tag product.image.url, class: "product-image" %>
+              </div>
+              <div class="col-md-6">
+                <div class="product-description"><%= product.description %></div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>

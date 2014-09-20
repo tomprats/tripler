@@ -42,6 +42,12 @@ input, textarea {
 }
 
 /* All links aside from nav bar/footer */
+#mainpage p a {
+  text-decoration: underline;
+  color: #FFFFFF;
+  &:hover { color: #FFFFFF; }   /* mouse over link */
+  &:active { color: #FFFFFF; }  /* as clicked link */
+}
 a {
   text-decoration: none;
   color: #667C26;
@@ -103,6 +109,9 @@ div#mainpage {
 }
 .padding-right-10 {
   padding-right: 10px;
+}
+.padding-right-40 {
+  padding-right: 40px;
 }
 .margin-0 {
   margin: 0;

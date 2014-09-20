@@ -12,13 +12,19 @@ class OrdersController < ApplicationController
 
       session[:cart] = cart
       session[:cart_total] = total
-      session[:rates] = nil
-      session[:shipping] = nil
-      session[:shipping_total] = nil
-      session[:shipping_zipcode] = nil
-      session[:total] = nil
 
-      render json: { status: 200, href: review_cart_path }
+      if packs[1].zero?
+        session[:rates] = nil
+        session[:shipping] = nil
+        session[:shipping_total] = nil
+        session[:shipping_zipcode] = nil
+        session[:total] = nil
+
+        render json: { status: 200, href: review_cart_path }
+      else
+        flash[:alert] = "Order must fit into packs of 8"
+        render json: { status: 200, href: jerky_path }
+      end
     else
       cart = session[:cart]
       cart[params[:product][:id]] = params[:product][:quantity]
@@ -37,6 +43,8 @@ class OrdersController < ApplicationController
       render json: {
         total: session[:total] || session[:cart_total],
         shipping_total: session[:shipping_total],
+        packs: packs[0],
+        packless: packs[1],
         product_total: product_total
       }
     end
@@ -44,6 +52,7 @@ class OrdersController < ApplicationController
 
   def empty_cart
     session[:cart] = nil
+    session[:cart_total] = nil
     session[:total] = nil
     session[:rates] = nil
     session[:shipping] = nil
@@ -58,6 +67,7 @@ class OrdersController < ApplicationController
 
     @cart = session[:cart] || {}
     @total = session[:cart_total]
+    @packs, @packless = packs
   end
 
   def update_shipping
@@ -69,57 +79,61 @@ class OrdersController < ApplicationController
   end
 
   def purchase
-    Stripe.api_key = ENV["STRIPE_SECRET"]
-    card_token = params[:card_token]
-    charge_token = nil
-    charge_description = "Triple R Farms delicious Jerky infused with Cowboy Coffee."
+    if packs[1].zero?
+      Stripe.api_key = ENV["STRIPE_SECRET"]
+      card_token = params[:card_token]
+      charge_token = nil
+      charge_description = "Triple R Farms delicious Jerky infused with Cowboy Coffee."
 
-    @order = Order.new(order_params.merge!(
-      description: charge_description,
-      shipping: session[:shipping],
-      shipping_total: session[:shipping_total],
-      total_price: session[:total],
-      user_id: current_user.try(:id),
-      order_items: order_items
-    ))
+      @order = Order.new(order_params.merge!(
+        description: charge_description,
+        shipping: session[:shipping],
+        shipping_total: session[:shipping_total],
+        total_price: session[:total],
+        user_id: current_user.try(:id),
+        order_items: order_items
+      ))
 
-    if @order.valid?
-      if current_user
-        customer_token = Stripe::Customer.create(
-          card: card_token,
-          description: "Customer for #{current_user.name} (id: #{current_user.id})"
-        ).id
-        current_user.update_attributes(customer_token: customer_token)
-        charge_token = Stripe::Charge.create(
-          amount: session[:total],
-          currency: "usd",
-          customer: customer_token,
-          description: charge_description
-        ).id
+      if @order.valid?
+        if current_user
+          customer_token = Stripe::Customer.create(
+            card: card_token,
+            description: "Customer for #{current_user.name} (id: #{current_user.id})"
+          ).id
+          current_user.update_attributes(customer_token: customer_token)
+          charge_token = Stripe::Charge.create(
+            amount: session[:total],
+            currency: "usd",
+            customer: customer_token,
+            description: charge_description
+          ).id
+        else
+          charge_token = Stripe::Charge.create(
+            amount: session[:total],
+            currency: "usd",
+            card: card_token,
+            description: charge_description
+          ).id
+        end
+        @order.charge_token = charge_token
+        @order.save!
+
+        session[:orders] ||= []
+        session[:orders].push(@order.id)
+        session[:cart] = nil
+        session[:cart_total] = nil
+        session[:rates] = nil
+        session[:shipping] = nil
+        session[:shipping_total] = nil
+        session[:shipping_zipcode] = nil
+        session[:total] = nil
+
+        redirect_to purchased_path
       else
-        charge_token = Stripe::Charge.create(
-          amount: session[:total],
-          currency: "usd",
-          card: card_token,
-          description: charge_description
-        ).id
+        redirect_to :back, alert: @order.errors.full_messages.join(", ")
       end
-      @order.charge_token = charge_token
-      @order.save!
-
-      session[:orders] ||= []
-      session[:orders].push(@order.id)
-      session[:cart] = nil
-      session[:cart_total] = nil
-      session[:rates] = nil
-      session[:shipping] = nil
-      session[:shipping_total] = nil
-      session[:shipping_zipcode] = nil
-      session[:total] = nil
-
-      redirect_to purchased_path
     else
-      redirect_to :back, alert: @order.errors.full_messages.join(", ")
+      redirect_to :back, alert: "Order must fit into packs of 8"
     end
   rescue Stripe::StripeError => e
     puts e.message
@@ -163,15 +177,21 @@ class OrdersController < ApplicationController
   end
 
   def calculate_shipping
-    rates = Order.find_shipping(session[:items], session[:shipping_zipcode])
-    session[:rates] = rates.rates.collect do |rate|
+    rates = Order.find_shipping(packs[0], session[:shipping_zipcode])
+    rates = rates.rates.collect do |rate|
       {
         price: rate.total_price,
         name: rate.service_name,
       }
     end
+    session[:rates] = rates.sort_by { |r| r[:price] }
     session[:shipping] = session[:rates].first[:name]
     session[:shipping_total] = session[:rates].first[:price]
     session[:total] = session[:shipping_total] + session[:cart_total]
+  end
+
+  def packs
+    quantity = (session[:cart] || {}).sum{ |i| i.last.to_i }
+    [quantity / 8, quantity % 8]
   end
 end

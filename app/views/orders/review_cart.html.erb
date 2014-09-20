@@ -32,6 +32,14 @@
       </tbody>
     </table>
     <div class="row">
+      <div class="col-md-12">
+        <h4 class="text-center">
+          <span class="padding-right-40">Packs: <span class="packs"><%= @packs %></span></span>
+          <span>Quantity to complete a pack: <span class="packless"><%= @packless.zero? ? 0 : 8 - @packless  %></span></span>
+        </h4>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-6">
         <%= form_for :card, html: { id: "card-form", class: "form-horizontal margin-20" } do |f| %>
           <h3>Billing Details</h3>

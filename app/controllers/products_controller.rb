@@ -34,6 +34,7 @@ class ProductsController < ApplicationController
       :name,
       :description,
       :price,
+      :coming_soon,
       :image
     )
   end

@@ -26,17 +26,16 @@ class Order < ActiveRecord::Base
     created_at.strftime("%m/%d/%Y")
   end
 
-  def self.find_shipping(items, destination_zipcode)
+  def self.find_shipping(packs, destination_zipcode)
     # Create package(s) out of items
-    packages = [
-      Package.new(
-        (7.5 * 16),      # 7.5 lbs, times 16 oz/lb.
-        [15, 10, 4.5],   # 15x10x4.5 inches
-        units: :imperial # not grams, not centimetres
-      )
-    ]
+    packages = []
+    package = Package.new(
+      (2 * 8), # oz
+      [3, 9, 7], #inches
+      units: :imperial # not grams, not centimetres
+    )
+    packs.times { packages.push(package) }
 
-    # Where we ship from
     origin = Location.new(
       country: "US",
       zip: "17402"
