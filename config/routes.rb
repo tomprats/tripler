@@ -26,6 +26,7 @@ Tripler::Application.routes.draw do
     get "/", to: "orders#index"
     get :orders, to: "orders#index"
     get "order/:id", to: "orders#show", as: :order
+    get "order/:id/toggle_shipped", to: "orders#toggle_shipped", as: :toggle_shipped
     get :feedback, to: "feedback#index"
 
     get :users, to: "users#index"

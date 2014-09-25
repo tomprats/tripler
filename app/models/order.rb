@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
   has_many :order_items
   belongs_to :user
+  belongs_to :shipped_admin, class_name: "User"
 
   accepts_nested_attributes_for :order_items
 
