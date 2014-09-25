@@ -10,7 +10,6 @@ $(document).ready(function() {
         message += "<div class=\"form-message green margin-bottom-10\">" + this + "</div>";
       });
     }
-    console.log(message)
     $(".feedback-form").before($(message));
   });
 });
