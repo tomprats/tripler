@@ -24,5 +24,15 @@ module Tripler
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     config.autoload_paths += %W(#{config.root}/lib)
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: "smtpout.secureserver.net",
+      domain: "www.triple-r-farms.com",
+      port: 80,
+      user_name: ENV["EMAIL_USERNAME"],
+      password: ENV["EMAIL_PASSWORD"],
+      authentication: :plain
+    }
   end
 end

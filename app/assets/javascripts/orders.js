@@ -51,35 +51,46 @@ $(document).ready(function() {
   });
 
   $(".review_cart #order_zipcode").on("change", function() {
-    var zipcode = $("#order_zipcode").val();
-    if(zipcode != "") {
-      $.post("/update_shipping", { zipcode: zipcode }, function(data) {
-        $(".shipping-total").text("$" + (data.shipping_total/100).toFixed(2))
-        $(".total").text((data.total/100).toFixed(2))
-      });
-    }
+    checkShipping(function() {});
   });
 
   $(document).on("click", ".review_cart .purchase", function(e) {
     e.preventDefault();
-    // Disable button first
-    Stripe.setPublishableKey($(".stripe-data").data("key"));
-    Stripe.card.createToken({
-      number: $("#card_number").val(),
-      cvc: $("#card_cvc").val(),
-      exp_month: $("#card_exp_month").val(),
-      exp_year: $("#card_exp_year").val()
-    }, function(status, response) {
-      if(response.error) {
-        alert(response.error.message);
-      } else {
-        if(confirm("Your credit card will be charged for $" + $(".total").text() + ".")) {
-          $form = $("#purchase-order");
-          $form.append($('<input type="hidden" name="card_token" />').val(response.id));
-          $form.get(0).submit();
+    callback = function() {
+      Stripe.setPublishableKey($(".stripe-data").data("key"));
+      Stripe.card.createToken({
+        number: $("#card_number").val(),
+        cvc: $("#card_cvc").val(),
+        exp_month: $("#card_exp_month").val(),
+        exp_year: $("#card_exp_year").val()
+      }, function(status, response) {
+        if(response.error) {
+          alert(response.error.message);
+        } else {
+          if(confirm("Your credit card will be charged for $" + $(".total").text() + ".")) {
+            $form = $("#purchase-order");
+            $form.append($('<input type="hidden" name="card_token" />').val(response.id));
+            $form.get(0).submit();
+          }
         }
-      }
-    });
+      });
+    }
+    checkShipping(callback);
     return false;
   });
+
+  checkShipping(function() {});
 });
+
+function checkShipping(callback) {
+  var zipcode = $("#order_zipcode").val();
+  if(zipcode != "") {
+    $.post("/update_shipping", { zipcode: zipcode }, function(data) {
+      $(".shipping-total").text("$" + (data.shipping_total/100).toFixed(2))
+      $(".total").text((data.total/100).toFixed(2))
+      callback();
+    });
+  } else {
+    callback();
+  }
+}

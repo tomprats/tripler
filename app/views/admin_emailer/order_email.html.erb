@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Triple R Farms: Order</h1>
+    <p>The following is a users order. See more on the admin dashboard.</p>
+    <h3>Name</h3>
+    <p><%= @order.name %></p>
+    <h3>Phone Number</h3>
+    <p><%= @order.phone_number %></p>
+    <h3>Address</h3>
+    <p><%= @order.address %></p>
+    <p><%= "#{@order.city}, #{@order.state} #{@order.zipcode}" %></p>
+    <h3>Shipping</h3>
+    <p><%= "#{@order.shipping} - $#{number_with_precision(@order.shipping_total / 100.0, precision: 2)}" %></p>
+    <h3>Total Price</h3>
+    <p>$<%= number_with_precision(@order.total_price / 100.0, precision: 2) %></p>
+    <h3>Items</h3>
+    <table width="100%">
+      <thead>
+        <tr width="100%">
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.order_items.each do |item| %>
+          <tr width="100%" style="text-align: center;">
+            <td><%= item.name %></td>
+            <td><%= item.quantity %></td>
+            <td>$<%= number_with_precision(item.price / 100.0, precision: 2) %></td>
+            <td>$<%= number_with_precision(item.total_price / 100.0, precision: 2) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -118,6 +118,8 @@ class OrdersController < ApplicationController
         @order.charge_token = charge_token
         @order.save!
 
+        AdminEmailer.order_email(@order).deliver
+
         session[:orders] ||= []
         session[:orders].push(@order.id)
         session[:cart] = nil
