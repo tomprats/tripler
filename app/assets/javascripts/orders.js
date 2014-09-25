@@ -79,7 +79,9 @@ $(document).ready(function() {
     return false;
   });
 
-  checkShipping(function() {});
+  if($("#order_zipcode").length) {
+    checkShipping(function() {});
+  }
 });
 
 function checkShipping(callback) {
