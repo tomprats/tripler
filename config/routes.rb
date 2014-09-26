@@ -30,6 +30,7 @@ Tripler::Application.routes.draw do
     get :feedback, to: "feedback#index"
 
     get :users, to: "users#index"
+    put "users/:id", to: "users#update", as: :user
     get "users/:id/toggle_admin", to: "users#toggle_admin", as: :toggle_admin
 
     get :products, to: "products#index"

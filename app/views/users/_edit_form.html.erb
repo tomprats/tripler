@@ -1,0 +1,29 @@
+<div class="edit-user-form hide user-<%= user.id %>">
+  <%= link_to "Edit User", "#", class: "prevent-default" %>
+  <%= link_to "x", "#", class: "pull-right edit-user" %>
+  <div class="clearfix margin-bottom-5"></div>
+  <%= form_for(user, url: user_path(id: user.id), method: :put, html: { class: "form-horizontal" }) do |f| %>
+    <div class="margin-top-10 margin-bottom-10">
+      <div class="input-left">
+        <%= f.text_field :name, { placeholder: "Name", class: "form-control" } %>
+      </div>
+      <div class="input-right">
+        <%= f.text_field :email, { placeholder: "Email", class: "form-control" } %>
+      </div>
+      <div class="clearfix margin-bottom-10"></div>
+      <div class="input-full">
+        <%= f.text_field :additional_emails, { placeholder: "Additional Emails (Comma Separated)", class: "form-control" } %>
+      </div>
+      <div class="clearfix margin-bottom-10"></div>
+      <div class="input-full">
+        <%= f.text_field :phone_number, { placeholder: "Phone Number", class: "form-control" } %>
+      </div>
+      <div class="clearfix margin-bottom-10"></div>
+      <div class="input-full">
+        <%= f.text_field :zipcode, { placeholder: "Zipcode", class: "form-control" } %>
+      </div>
+      <div class="clearfix margin-bottom-10"></div>
+      <%= f.submit "Update User", class: "btn btn-green" %>
+    </div>
+  <% end %>
+</div>

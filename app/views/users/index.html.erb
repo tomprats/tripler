@@ -3,9 +3,11 @@
     <tr>
       <th>Name</th>
       <th>Email</th>
+      <th>Additional Emails</th>
       <th>Phone Number</th>
       <th>Zipcode</th>
       <th>Admin?</th>
+      <th>Options</th>
     </tr>
   </thead>
   <tbody>
@@ -13,10 +15,14 @@
       <tr>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
+        <td><%= user.additional_emails %></td>
         <td><%= user.phone_number %></td>
         <td><%= user.zipcode %></td>
         <td><%= user.admin %> (<%= link_to "toggle", toggle_admin_path(id: user.id), class: "admin-link" %>)</td>
+        <td><%= link_to "Edit", "#", class: "edit-user admin-link", data: { id: user.id } if user == current_user %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<%= render partial: "users/edit_form", locals: { user: current_user } %>

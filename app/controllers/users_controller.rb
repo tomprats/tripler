@@ -36,6 +36,17 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def update
+    user = current_user
+    if user && user.update_attributes(user_params)
+      render json: { status: 200 }
+    elsif user.nil?
+      render json: { status: 500, message: ["User could not be updated"] }
+    else
+      render json: { status: 400, message: user.errors.full_messages }
+    end
+  end
+
   def toggle_admin
     unless params[:id] == "1"
       user = User.find_by(id: params[:id])
@@ -55,6 +66,7 @@ class UsersController < ApplicationController
       :first_name,
       :last_name,
       :email,
+      :additional_emails,
       :phone_number,
       :address,
       :city,
