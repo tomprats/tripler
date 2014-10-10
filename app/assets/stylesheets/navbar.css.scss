@@ -13,7 +13,6 @@ nav {
   padding-bottom: 5px;
   text-align: center;
   font-size: 14px;
-  font-family: Truckstyle, TruckstyleEI;
   display: block;
   background-color: rgb(102, 124, 38);
 }
@@ -24,6 +23,7 @@ nav a {
   margin: 1em;
   text-decoration: none;
   color: #FFFFFF;
+  font-family: Truckstyle, TruckstyleEI;
   &:hover { color: #000000; }   /* mouse over link */
   &:active { color: #000000; }  /* as clicked link */
 }

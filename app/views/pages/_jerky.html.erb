@@ -1,0 +1,13 @@
+<div class="col-sm-12 product-box" data-id="<%= product.id %>">
+  <div class="row">
+    <div class="col-xs-12">
+      <%= image_tag product.image.url, class: "product-image" %>
+    </div>
+    <div class="col-xs-12">
+      <h3 class="hide product-name"><%= product.name %></h3>
+      <div class="product-quantity">Quantity: <%= select_tag(:quantity, options_for_select(0..50, @cart[product.id.to_s])) %></div>
+      <div class="hide product-description"><%= product.description %></div>
+      <div class="hide product-price">Price: $<span class="price"><%= number_with_precision(product.price/100.0, precision: 2) %></span></div>
+    </div>
+  </div>
+</div>
