@@ -13,30 +13,16 @@ Tripler::Application.routes.draw do
 
     post :feedback, to: "feedback#create"
 
-    post :update_cart, to: "orders#update_cart"
-    delete :empty_cart, to: "orders#empty_cart"
-    get :review_cart, to: "orders#review_cart"
-    post :update_shipping, to: "orders#update_shipping"
+    post :order, to: "orders#create"
+    get :order, to: "orders#edit"
+    put :order, to: "orders#update"
+    delete :order, to: "orders#destroy"
+
     post :purchase, to: "orders#purchase"
     get :purchased, to: "orders#purchased"
   end
 
   constraints(AdminSubdomain) do
-    get "/", to: "orders#index"
-    get :orders, to: "orders#index"
-    get "order/:id", to: "orders#show", as: :order
-    get "order/:id/toggle_shipped", to: "orders#toggle_shipped", as: :toggle_shipped
-    get :feedback, to: "feedback#index"
-
-    get :users, to: "users#index"
-    put "users/:id", to: "users#update", as: :user
-    get "users/:id/toggle_admin", to: "users#toggle_admin", as: :toggle_admin
-
-    get :products, to: "products#index"
-    post :products, to: "products#create"
-    put "products/:id", to: "products#update", as: :product
-    delete "products/:id", to: "products#destroy"
-
-    delete :return, to: "users#return"
+    # Add admin paths back under namespace
   end
 end

@@ -11,98 +11,105 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140926020725) do
+ActiveRecord::Schema.define(version: 20150710225604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "admins", force: true do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "password_digest"
+  create_table "admins", force: :cascade do |t|
+    t.string   "name",            limit: 255
+    t.string   "email",           limit: 255
+    t.string   "password_digest", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "feedback", force: true do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "message"
+  create_table "feedback", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "email",      limit: 255
+    t.string   "message",    limit: 255
     t.integer  "user_id"
-    t.boolean  "deleted",    default: false
+    t.boolean  "deleted",                default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "items", force: true do |t|
-    t.string   "name"
+  create_table "items", force: :cascade do |t|
+    t.string   "name",        limit: 255
     t.integer  "price"
-    t.string   "description"
-    t.string   "image"
-    t.boolean  "sold",        default: false
+    t.string   "description", limit: 255
+    t.string   "image",       limit: 255
+    t.boolean  "sold",                    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "order_items", force: true do |t|
+  create_table "order_items", force: :cascade do |t|
     t.integer  "order_id"
     t.integer  "total_price"
     t.integer  "quantity"
     t.integer  "product_id"
     t.integer  "price"
-    t.string   "name"
-    t.string   "description"
-    t.string   "image"
+    t.string   "name",        limit: 255
+    t.string   "description", limit: 255
+    t.string   "image",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "orders", force: true do |t|
+  create_table "orders", force: :cascade do |t|
     t.integer  "total_price"
-    t.string   "description"
-    t.string   "charge_token"
+    t.string   "description",      limit: 255
+    t.string   "charge_token",     limit: 255
     t.integer  "user_id"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "phone_number"
-    t.string   "address"
-    t.string   "city"
-    t.string   "state"
-    t.string   "zipcode"
+    t.string   "first_name",       limit: 255
+    t.string   "last_name",        limit: 255
+    t.string   "phone_number",     limit: 255
+    t.string   "address1",         limit: 255
+    t.string   "city",             limit: 255
+    t.string   "state",            limit: 255
+    t.string   "zipcode",          limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "shipping"
+    t.string   "shipping",         limit: 255
     t.integer  "shipping_total"
-    t.boolean  "shipped",          default: false
+    t.boolean  "shipped",                      default: false
     t.datetime "shipped_date"
     t.integer  "shipped_admin_id"
-  end
-
-  create_table "products", force: true do |t|
-    t.integer  "price"
-    t.string   "name"
-    t.string   "description"
-    t.string   "image"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "coming_soon", default: false
-  end
-
-  create_table "users", force: true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
+    t.string   "address2"
+    t.string   "uuid"
     t.string   "email"
-    t.string   "password_digest"
-    t.string   "phone_number"
-    t.string   "address"
-    t.string   "city"
-    t.string   "state"
-    t.string   "zipcode"
-    t.string   "customer_token"
-    t.boolean  "admin",             default: false
+    t.string   "shipment_id"
+    t.boolean  "paid",                         default: false
+    t.datetime "paid_date"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.integer  "price"
+    t.string   "name",        limit: 255
+    t.string   "description", limit: 255
+    t.string   "image",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "additional_emails"
+    t.boolean  "coming_soon",             default: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "first_name",        limit: 255
+    t.string   "last_name",         limit: 255
+    t.string   "email",             limit: 255
+    t.string   "password_digest",   limit: 255
+    t.string   "phone_number",      limit: 255
+    t.string   "address1",          limit: 255
+    t.string   "city",              limit: 255
+    t.string   "state",             limit: 255
+    t.string   "zipcode",           limit: 255
+    t.string   "customer_token",    limit: 255
+    t.boolean  "admin",                         default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "additional_emails", limit: 255
+    t.string   "address2"
   end
 
 end

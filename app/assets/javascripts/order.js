@@ -19,34 +19,45 @@ $(document).ready(function() {
 
   $(".jerky .checkout").click(function(e) {
     e.preventDefault();
-    var cart = {};
+    var order = {};
+    order["order_items_attributes"] = [];
     $(".product-box").each(function() {
       var $this = $(this);
-      cart[$this.data("id")] = $this.find("select").val();
+      order["order_items_attributes"].push({
+        product_id: $this.data("id"),
+        quantity: $this.find("select").val()
+      });
     });
-    $.post("/update_cart", { cart: cart }, function(data) {
+    $.post("/order", { order: order }, function(data) {
       location.href = data.href;
     });
     return false;
   });
 
-  $(".review_cart .product-quantity select").on("change", function() {
+  $(".orders.edit .product-quantity select").on("change", function() {
     var $this = $(this);
     var quantity = $this.val();
     var id = $this.closest("tr").data("id");
-    var product = { quantity: quantity, id: id }
-    $.post("/update_cart", { product: product }, function(data) {
-      $this.parent().siblings(".product-total").text("$" + (data.product_total/100).toFixed(2));
-      if(data.shipping) {
-        $(".shipping-total").text("$" + (data.shipping_total/100).toFixed(2))
+    var product = { product_id: id, quantity: quantity }
+    $.ajax({
+      url: "/order",
+      type: "PUT",
+      data: { product: product },
+      success: function(data) {
+        product = $(data.order_items).each(function() {
+          $("tr[data-id='" + this.product_id + "'] .product-total").text("$" + (this.total_price/100).toFixed(2));
+        });
+        if(data.shipping) {
+          $(".shipping-total").text("$" + (data.shipping_total/100).toFixed(2))
+        }
+        $(".packs").text(data.packs)
+        if(data.packless == 0) {
+          $(".packless").text(0);
+        } else {
+          $(".packless").text(8 - data.packless);
+        }
+        $(".total").text((data.total_price/100).toFixed(2))
       }
-      $(".packs").text(data.packs)
-      if(data.packless == 0) {
-        $(".packless").text(0);
-      } else {
-        $(".packless").text(8 - data.packless);
-      }
-      $(".total").text((data.total/100).toFixed(2))
     });
   });
 

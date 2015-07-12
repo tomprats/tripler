@@ -1,81 +1,36 @@
-require "active_shipping"
-include ActiveMerchant::Shipping
-
 class OrdersController < ApplicationController
-  def update_cart
-    if params[:cart]
-      cart = params[:cart].delete_if { |key, value| value == "0" }
-      total = 0
-      cart.each do |key, value|
-        total += Product.find(key).price * value.to_i
-      end
+  def create
+    session[:order] = nil
+    hash = remove_empty_items order_params
+    update_order hash
 
-      session[:cart] = cart
-      session[:cart_total] = total
-
-      if packs[1].zero?
-        session[:rates] = nil
-        session[:shipping] = nil
-        session[:shipping_total] = nil
-        session[:shipping_zipcode] = nil
-        session[:total] = nil
-
-        render json: { status: 200, href: review_cart_path }
-      else
-        flash[:alert] = "Order must fit into packs of 8"
-        render json: { status: 200, href: jerky_path }
-      end
+    if valid_package?
+      render json: { status: 200, href: order_path }
     else
-      cart = session[:cart]
-      cart[params[:product][:id]] = params[:product][:quantity]
-      total = 0
-      cart.each do |key, value|
-        total += Product.find(key).price * value.to_i
-      end
-      product_total = Product.find(params[:product][:id]).price * params[:product][:quantity].to_i
-
-      calculate_shipping if session[:shipping_zipcode]
-
-      session[:cart] = cart
-      session[:cart_total] = total
-      session[:total] = session[:cart_total] + session[:shipping_total] if session[:shipping_total]
-
-      render json: {
-        total: session[:total] || session[:cart_total],
-        shipping_total: session[:shipping_total],
-        packs: packs[0],
-        packless: packs[1],
-        product_total: product_total
-      }
+      flash[:alert] = "Order must fit into packs of 8"
+      render json: { status: 200, href: jerky_path }
     end
   end
 
-  def empty_cart
-    session[:cart] = nil
-    session[:cart_total] = nil
-    session[:total] = nil
-    session[:rates] = nil
-    session[:shipping] = nil
-    session[:shipping_total] = nil
-    session[:shipping_zipcode] = nil
+  def edit
+    @order = current_order
+
+    redirect_to jerky_path unless @order.total_price > 0
+  end
+
+  def update
+    update_product params[:product]
+
+    render json: current_order.to_json(
+      include: :order_items,
+      methods: [:subtotal, :packs, :packless]
+    )
+  end
+
+  def destroy
+    session[:order] = nil
 
     redirect_to jerky_path
-  end
-
-  def review_cart
-    redirect_to jerky_path unless session[:cart_total] && session[:cart_total] > 0
-
-    @cart = session[:cart] || {}
-    @total = session[:cart_total]
-    @packs, @packless = packs
-  end
-
-  def update_shipping
-    session[:shipping_zipcode] = params[:zipcode]
-
-    calculate_shipping
-
-    render json: { total: session[:total], shipping_total: session[:shipping_total] }
   end
 
   def purchase
@@ -163,33 +118,43 @@ class OrdersController < ApplicationController
   private
   def order_params
     params.require(:order).permit(
-      :first_name,
-      :last_name,
-      :phone_number,
-      :address,
-      :city,
-      :state,
-      :zipcode
+      :first_name, :last_name, :email,
+      :phone_number, :address1, :address2,
+      :city, :state, :zipcode,
+      order_items_attributes: [
+        :product_id, :quantity
+      ]
     )
   end
 
-  def order_items
-    session[:cart].collect do |key, value|
-      product = Product.find(key)
-      OrderItem.new(
-        quantity: value,
-        price: product.price,
-        total_price: value.to_i * product.price,
-        product_id: product.id,
-        name: product.name,
-        description: product.description,
-        image: product.image.url
-      )
+  def remove_empty_items(hash)
+    return hash unless hash[:order_items_attributes]
+    items = hash[:order_items_attributes]
+    hash[:order_items_attributes] = items.collect { |k,v| v unless v[:quantity].to_i.zero? }.compact
+    hash
+  end
+
+  def update_order(hash)
+    session[:order] ||= {}
+    session[:order].merge!(hash.deep_stringify_keys)
+  end
+
+  def update_product(hash)
+    hash.deep_stringify_keys!
+    session[:order] ||= {}
+    session[:order]["order_items_attributes"] ||= []
+    index = session[:order]["order_items_attributes"].index do |order_item|
+      order_item["product_id"] == hash[:product_id]
     end
+    session[:order]["order_items_attributes"][index] = hash if index
+  end
+
+  def valid_package?
+    current_order.packless.zero?
   end
 
   def calculate_shipping
-    rates = Order.find_shipping(packs[0], session[:shipping_zipcode])
+    rates = current_order.find_rates
     rates = rates.rates.collect do |rate|
       {
         price: rate.total_price,
@@ -200,10 +165,5 @@ class OrdersController < ApplicationController
     session[:shipping] = session[:rates].first[:name]
     session[:shipping_total] = session[:rates].first[:price]
     session[:total] = session[:shipping_total] + session[:cart_total]
-  end
-
-  def packs
-    quantity = (session[:cart] || {}).sum{ |i| i.last.to_i }
-    [quantity / 8, quantity % 8]
   end
 end
