@@ -2,7 +2,7 @@
   <%= link_to "Edit User", "#", class: "prevent-default" %>
   <%= link_to "x", "#", class: "pull-right edit-user" %>
   <div class="clearfix margin-bottom-5"></div>
-  <%= form_for(user, url: user_path(id: user.id), method: :put, html: { class: "form-horizontal" }) do |f| %>
+  <%= form_for(user, url: admin_user_path(id: user.id), method: :put, html: { class: "form-horizontal" }) do |f| %>
     <div class="margin-top-10 margin-bottom-10">
       <div class="input-left">
         <%= f.text_field :name, { placeholder: "Name", class: "form-control" } %>

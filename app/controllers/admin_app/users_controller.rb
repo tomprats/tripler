@@ -27,5 +27,23 @@ module AdminApp
       session[:user_id] = nil
       redirect_to root_url(subdomain: nil)
     end
+
+    private
+    def user_params
+      params.require(:user).permit(
+        :first_name,
+        :last_name,
+        :email,
+        :additional_emails,
+        :phone_number,
+        :address1,
+        :address2,
+        :city,
+        :state,
+        :zipcode,
+        :password,
+        :password_confirmation
+      )
+    end
   end
 end

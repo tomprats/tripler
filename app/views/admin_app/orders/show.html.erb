@@ -26,12 +26,14 @@
 <table class="table table-bordered">
   <thead>
     <tr>
+      <th>Package</th>
       <th>Label</th>
     </tr>
   </thead>
   <tbody>
     <% @order.packages.each do |package| %>
       <tr>
+        <td class="text-center"><%= package.id %></td>
         <td><%= link_to package.label.url, package.label.url %></td>
       </tr>
     <% end %>
@@ -72,6 +74,7 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
+      <th>Package</th>
       <th>Price Per Unit</th>
       <th>Quantity</th>
       <th>Total Price</th>
@@ -82,8 +85,9 @@
       <tr>
         <td><%= item.name %></td>
         <td><%= item.description %></td>
+        <td class="text-center"><%= item.package.id %></td>
         <td>$<%= number_with_precision(item.price / 100.0, precision: 2) %></td>
-        <td><%= item.quantity %></td>
+        <td class="text-center"><%= item.quantity %></td>
         <td>$<%= number_with_precision(item.total_price / 100.0, precision: 2) %></td>
       </tr>
     <% end %>

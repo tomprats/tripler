@@ -25,7 +25,7 @@
 </table>
 
 <%= link_to "Add Product", "#", class: "create-product admin-create-btn" %>
-<%= render partial: "products/form" %>
+<%= render partial: "form" %>
 <% @products.each do |product| %>
-  <%= render partial: "products/edit_form", locals: { product: product } %>
+  <%= render partial: "edit_form", locals: { product: product } %>
 <% end %>

@@ -57,7 +57,7 @@ class Order < ActiveRecord::Base
     @origin ||= ActiveShipping::Location.new(
       name: "Triple R Farms",
       phone: "717-542-4022",
-      address1: "890 heritage hills Dr",
+      address1: "890 Heritage Hills Dr",
       city: "York",
       state: "PA",
       zip: "17403"

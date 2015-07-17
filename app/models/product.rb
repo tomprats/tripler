@@ -4,4 +4,8 @@ class Product < ActiveRecord::Base
   validates_presence_of :name, :description, :price, :image
 
   mount_uploader :image, ProductImageUploader
+
+  def self.default_scope
+    order(:name)
+  end
 end
