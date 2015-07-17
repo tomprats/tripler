@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20150710225604) do
     t.string   "image",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "package_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -77,11 +78,17 @@ ActiveRecord::Schema.define(version: 20150710225604) do
     t.datetime "shipped_date"
     t.integer  "shipped_admin_id"
     t.string   "address2"
-    t.string   "uuid"
     t.string   "email"
-    t.string   "shipment_id"
     t.boolean  "paid",                         default: false
     t.datetime "paid_date"
+  end
+
+  create_table "packages", force: :cascade do |t|
+    t.integer  "order_id"
+    t.string   "uuid"
+    t.string   "label"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "products", force: :cascade do |t|

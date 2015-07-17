@@ -1,8 +1,9 @@
 class OrderItem < ActiveRecord::Base
   belongs_to :order
+  belongs_to :package
   belongs_to :product
 
-  after_initialize :set_details
+  after_initialize :set_details, if: :new_record?
   after_initialize :update_total, if: :new_record?
   before_save :update_total
 
@@ -15,6 +16,6 @@ class OrderItem < ActiveRecord::Base
   end
 
   def update_total
-    self.total_price = product.price * quantity
+    self.total_price = (price || product.price) * quantity
   end
 end

@@ -1,0 +1,33 @@
+<div id="order">
+  <div id="mainpage">
+    <div class="row">
+      <div class="col-xs-12">
+        <%= form_for :order, url: order_rates_path, method: :post, html: { id: "order-rates", class: "form-horizontal margin-20" } do |f| %>
+          <%= hidden_field_tag :rate %>
+          <h3>Shipping Rate</h3>
+          <p class="text-center">Select the shipping rate to send your package(s).</p>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Price</th>
+                <th>Arrival</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @rates.each do |rate| %>
+                <tr data-rate="<%= rate[:rate] %>">
+                  <td><%= rate[:service] %></td>
+                  <td>$<%= number_with_precision(rate[:price] / 100.0, precision: 2) %></td>
+                  <td><%= rate[:date].strftime("%m/%d/%Y") %></td>
+                  <td><%= link_to "Select", "#", class: "btn btn-green select-rate" %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

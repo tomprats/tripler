@@ -1,0 +1,83 @@
+<div id="order">
+  <div id="mainpage">
+    <div class="row">
+      <div class="col-xs-12">
+        <%= form_for current_order, url: order_address_path, method: :post, html: { class: "form-horizontal margin-20" } do |f| %>
+          <h3>Shipping Details</h3>
+          <div class="form-errors margin-bottom-10 text-center"></div>
+          <div class="row padding-left-10 padding-0-mobile">
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="col-xs-6">
+                  <div class="form-group padding-right-10 padding-0-mobile">
+                    <%= f.label :first_name, "First Name", class: "control-label" %>
+                    <%= f.text_field :first_name, { value: current_user.try(:first_name), class: "form-control" } %>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="form-group padding-left-10 padding-0-mobile">
+                    <%= f.label :last_name, "Last Name", class: "control-label" %>
+                    <%= f.text_field :last_name, { value: current_user.try(:last_name), class: "form-control" } %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <%= f.label :email, class: "control-label" %>
+                    <%= f.email_field :email, { value: current_user.try(:email), class: "form-control" } %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <%= f.label :address1, "Address Line 1", class: "control-label" %>
+                    <%= f.text_field :address1, { value: current_user.try(:address1), class: "form-control" } %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <%= f.label :address2, "Address Line 2 (Optional)", class: "control-label" %>
+                    <%= f.text_field :address2, { value: current_user.try(:address2), class: "form-control" } %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6">
+                  <div class="form-group padding-right-10 padding-0-mobile">
+                    <%= f.label :city, class: "control-label" %>
+                    <%= f.text_field :city, { value: current_user.try(:city), class: "form-control" } %>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="form-group padding-left-10 padding-0-mobile">
+                    <%= f.label :state, class: "control-label" %>
+                    <%= f.text_field :state, { value: current_user.try(:state), class: "form-control" } %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6">
+                  <div class="form-group padding-right-10 padding-0-mobile">
+                    <%= f.label :zipcode, class: "control-label" %>
+                    <%= f.text_field :zipcode, { value: current_user.try(:zipcode), class: "form-control" } %>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="form-group padding-left-10 padding-0-mobile">
+                    <%= f.label :phone_number, "Phone Number", class: "control-label" %>
+                    <%= f.text_field :phone_number, { value: current_user.try(:phone_number), class: "form-control" } %>
+                  </div>
+                </div>
+                <%= f.submit "Continue", class: "btn btn-green pull-right" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -19,4 +19,15 @@ class User < ActiveRecord::Base
   def default_scope
     order(last_name: :desc, first_name: :desc)
   end
+
+  def create_customer_token(card_token)
+    Stripe.api_key = ENV["STRIPE_SECRET"]
+    customer_token = Stripe::Customer.create(
+      card: card_token,
+      description: "Customer for #{name} (id: #{id})"
+    ).id
+    update(customer_token: customer_token)
+
+    customer_token
+  end
 end

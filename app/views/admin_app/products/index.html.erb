@@ -17,7 +17,7 @@
         <td><%= link_to product.image.url, product.image.url, class: "admin-link" %></td>
         <td>
           <%= link_to "Edit", "#", class: "edit-product admin-link", data: { id: product.id } %> | 
-          <%= link_to "Delete", product_path(id: product.id), method: :delete, class: "admin-link" %>
+          <%= link_to "Delete", admin_product_path(id: product.id), method: :delete, class: "admin-link" %>
         </td>
       </tr>
     <% end %>

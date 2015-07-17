@@ -1,13 +1,13 @@
 <nav>
   <div id="nav">
-    <%= link_to "Orders", orders_path, class: "admin-nav-orders" %>
-    <%= link_to "Feedback", feedback_path, class: "admin-nav-feedback" %>
-    <%= link_to "Product", products_path, class: "admin-nav-products" %>
-    <%= link_to "Users", users_path, class: "admin-nav-users" %>
+    <%= link_to "Orders", admin_orders_path, class: "admin-nav-orders" %>
+    <%= link_to "Feedback", admin_feedback_path, class: "admin-nav-feedback" %>
+    <%= link_to "Product", admin_products_path, class: "admin-nav-products" %>
+    <%= link_to "Users", admin_users_path, class: "admin-nav-users" %>
   </div>
 </nav>
 
-<%= link_to "Return to RRR", return_path, method: :delete, class: "return-admin" %>
+<%= link_to "Return to RRR", admin_return_path, method: :delete, class: "return-admin" %>
 
 <style>
   #nav .admin-nav-<%= controller_name %> {

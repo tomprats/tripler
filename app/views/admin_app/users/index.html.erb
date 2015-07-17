@@ -18,7 +18,7 @@
         <td><%= user.additional_emails %></td>
         <td><%= user.phone_number %></td>
         <td><%= user.zipcode %></td>
-        <td><%= user.admin %> (<%= link_to "toggle", toggle_admin_path(id: user.id), class: "admin-link" %>)</td>
+        <td><%= user.admin %> (<%= link_to "toggle", admin_toggle_admin_path(id: user.id), class: "admin-link" %>)</td>
         <td><%= link_to "Edit", "#", class: "edit-user admin-link", data: { id: user.id } if user == current_user %></td>
       </tr>
     <% end %>

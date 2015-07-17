@@ -21,6 +21,23 @@
   </tbody>
 </table>
 
+<h3>Packages</h3>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.packages.each do |package| %>
+      <tr>
+        <td><%= link_to package.label.url, package.label.url %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <h3>Address</h3>
 
 <table class="table table-bordered">
@@ -28,7 +45,8 @@
     <tr>
       <th>Name</th>
       <th>Phone Number</th>
-      <th>Address</th>
+      <th>Address1</th>
+      <th>Address2</th>
       <th>City</th>
       <th>State</th>
       <th>Zipcode</th>
@@ -38,7 +56,8 @@
     <tr>
       <td><%= @order.name %></td>
       <td><%= @order.phone_number %></td>
-      <td><%= @order.address %></td>
+      <td><%= @order.address1 %></td>
+      <td><%= @order.address2 %></td>
       <td><%= @order.city %></td>
       <td><%= @order.state %></td>
       <td><%= @order.zipcode %></td>

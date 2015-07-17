@@ -10,13 +10,6 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
-  def current_order
-    # @current_order ||= Order.find_by(id: session[:order_id])
-
-    @current_order || Order.from_session(session[:order])
-  end
-  helper_method :current_order
-
   def log_in(user)
     session[:user_id] = user.id if user.try(:id)
   end
