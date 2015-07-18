@@ -38,67 +38,6 @@ module UserApp
       redirect_to jerky_path
     end
 
-    def purchase
-      if packs[1].zero?
-        Stripe.api_key = ENV["STRIPE_SECRET"]
-        card_token = params[:card_token]
-        charge_token = nil
-        charge_description = "Triple R Farms delicious Jerky infused with Cowboy Coffee."
-
-        @order = Order.new(order_params.merge!(
-          description: charge_description,
-          shipping: session[:shipping],
-          shipping_total: session[:shipping_total],
-          total_price: session[:total],
-          user_id: current_user.try(:id),
-          order_items: order_items
-        ))
-
-        if @order.valid?
-          if current_user
-            customer_token = Stripe::Customer.create(
-              card: card_token,
-              description: "Customer for #{current_user.name} (id: #{current_user.id})"
-            ).id
-            current_user.update_attributes(customer_token: customer_token)
-            charge_token = Stripe::Charge.create(
-              amount: session[:total],
-              currency: "usd",
-              customer: customer_token,
-              description: charge_description
-            ).id
-          else
-            charge_token = Stripe::Charge.create(
-              amount: session[:total],
-              currency: "usd",
-              card: card_token,
-              description: charge_description
-            ).id
-          end
-          @order.charge_token = charge_token
-          @order.save!
-
-          AdminEmailer.order_email(@order).deliver
-
-          session[:orders] ||= []
-          session[:orders].push(@order.id)
-          session[:cart] = nil
-          session[:cart_total] = nil
-          session[:rates] = nil
-          session[:shipping] = nil
-          session[:shipping_total] = nil
-          session[:shipping_zipcode] = nil
-          session[:total] = nil
-
-          redirect_to purchased_path
-        else
-          redirect_to :back, alert: @order.errors.full_messages.join(", ")
-        end
-      else
-        redirect_to :back, alert: "Order must fit into packs of 8"
-      end
-    end
-
     private
     def order_params
       params.require(:order).permit(

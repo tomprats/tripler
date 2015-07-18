@@ -10,6 +10,8 @@ module UserApp
       @order = current_order
       @order.checkout(params[:card_token], current_user.try(:id))
 
+      AdminEmailer.order_email(@order).deliver
+
       purge_order
       redirect_to order_purchased_path
     rescue Stripe::StripeError => e
