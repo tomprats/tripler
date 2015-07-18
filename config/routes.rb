@@ -36,6 +36,9 @@ Tripler::Application.routes.draw do
     get :orders, to: "orders#index"
     get "order/:id", to: "orders#show", as: :order
     get "order/:id/toggle_shipped", to: "orders#toggle_shipped", as: :toggle_shipped
+
+    resources :packages, only: :show
+
     get :feedback, to: "feedback#index"
 
     get :users, to: "users#index"

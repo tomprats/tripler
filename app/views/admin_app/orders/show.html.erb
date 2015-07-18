@@ -34,7 +34,7 @@
     <% @order.packages.each do |package| %>
       <tr>
         <td class="text-center"><%= package.id %></td>
-        <td><%= link_to package.label.url, package.label.url %></td>
+        <td><%= link_to admin_package_url(package), admin_package_url(package), target: :_blank %></td>
       </tr>
     <% end %>
   </tbody>

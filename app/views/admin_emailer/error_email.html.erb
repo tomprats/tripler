@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Triple R Farms: ERROR</h1>
+    <p>The following is an error. See more on the admin dashboard.</p>
+    <h3>Error</h3>
+    <p><%= @error.message %></p>
+    <h3>Name</h3>
+    <p><%= @order.name %></p>
+    <h3>Phone Number</h3>
+    <p><%= @order.phone_number %></p>
+    <h3>Address</h3>
+    <p><%= @order.address %></p>
+    <p><%= "#{@order.city}, #{@order.state} #{@order.zipcode}" %></p>
+    <h3>Total Price</h3>
+    <p>$<%= number_with_precision(@order.total_price / 100.0, precision: 2) %></p>
+  </body>
+</html>

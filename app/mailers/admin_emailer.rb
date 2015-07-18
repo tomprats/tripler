@@ -1,5 +1,8 @@
 class AdminEmailer < ActionMailer::Base
-  default from: "Triple R Farms <#{ENV["EMAIL_USERNAME"]}>"
+  default(
+    from: "Triple R Farms <#{ENV["EMAIL_USERNAME"]}>",
+    url_options: { host: ENV["ADMIN_HOST"] }
+  )
 
   def feedback_email(feedback)
     @feedback = feedback
@@ -11,6 +14,13 @@ class AdminEmailer < ActionMailer::Base
     @order = order
     @emails = admin_emails
     mail(to: @emails, subject: "[Triple-R-Farms] Order")
+  end
+
+  def error_email(order, error)
+    @order = order
+    @error = error
+
+    mail(to: "tprats108@gmail.com", subject: "[Triple-R-Farms] Error")
   end
 
   private

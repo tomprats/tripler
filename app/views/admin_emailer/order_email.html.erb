@@ -17,11 +17,29 @@
     <p><%= "#{@order.shipping} - $#{number_with_precision(@order.shipping_total / 100.0, precision: 2)}" %></p>
     <h3>Total Price</h3>
     <p>$<%= number_with_precision(@order.total_price / 100.0, precision: 2) %></p>
+    <h3>Packages</h3>
+    <table width="100%">
+      <thead>
+        <tr width="100%">
+          <th>Package</th>
+          <th>Label</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.packages.each do |package| %>
+          <tr width="100%" style="text-align: center;">
+            <td><%= package.id %></td>
+            <td><%= link_to admin_package_url(package), admin_package_url(package), target: :_blank %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
     <h3>Items</h3>
     <table width="100%">
       <thead>
         <tr width="100%">
           <th>Item</th>
+          <th>Package</th>
           <th>Quantity</th>
           <th>Price</th>
           <th>Total Price</th>
@@ -31,6 +49,7 @@
         <% @order.order_items.each do |item| %>
           <tr width="100%" style="text-align: center;">
             <td><%= item.name %></td>
+            <td><%= item.package.id %></td>
             <td><%= item.quantity %></td>
             <td>$<%= number_with_precision(item.price / 100.0, precision: 2) %></td>
             <td>$<%= number_with_precision(item.total_price / 100.0, precision: 2) %></td>

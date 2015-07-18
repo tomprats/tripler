@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
     Stripe.api_key = ENV["STRIPE_SECRET"]
     customer_token = Stripe::Customer.create(
       card: card_token,
+      email: email,
       description: "Customer for #{name} (id: #{id})"
     ).id
     update(customer_token: customer_token)

@@ -129,14 +129,16 @@ class Order < ActiveRecord::Base
       delivery_notification: true
     }
 
+    purchase_postage(100, 100)
+
     packages.each do |package|
       package.create_shipment(options)
     end
   end
 
-  def purchase_postage(amount = 100)
+  def purchase_postage(amount, minimum)
     account = stamps.account_info
-    stamps.purchase_postage(amount, account.control_total)
+    stamps.purchase_postage(amount, account.control_total) if account.control_total.to_i < minimum
   end
 
   def checkout(card_token, user_id)
@@ -162,7 +164,15 @@ class Order < ActiveRecord::Base
       self.paid = true
       self.paid_date = DateTime.now
 
-      save && create_shipment
+      save
+
+      begin
+        create_shipment
+      rescue => error
+        AdminEmailer.error_email(order, error).deliver
+
+        raise error
+      end
     end
   end
 
