@@ -1,8 +1,7 @@
 class AdminEmailer < ActionMailer::Base
-  default(
-    from: "Triple R Farms <#{ENV["EMAIL_USERNAME"]}>",
-    url_options: { host: ENV["ADMIN_HOST"] }
-  )
+  default from: "Triple R Farms <#{ENV["EMAIL_USERNAME"]}>"
+
+  before_action :set_host
 
   def feedback_email(feedback)
     @feedback = feedback
@@ -26,5 +25,9 @@ class AdminEmailer < ActionMailer::Base
   private
   def admin_emails
     User.admins.pluck(:email, :additional_emails).compact.map{|a| a.split(",")}.flatten.compact
+  end
+
+  def set_host
+    AdminEmailer.default_url_options[:host] = ENV["ADMIN_HOST"]
   end
 end

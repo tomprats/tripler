@@ -15,6 +15,7 @@ gem "stripe"
 # Frontend
 gem "sass-rails"
 gem "bootstrap-sass"
+gem "font-awesome-rails"
 gem "uglifier"
 gem "jquery-rails"
 gem "jquery-form-rails"
