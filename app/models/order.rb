@@ -16,6 +16,10 @@ class Order < ActiveRecord::Base
   after_initialize :update_total
   before_save :update_total
 
+  def self.default_scope
+    order(created_at: :desc)
+  end
+
   def name
     "#{first_name} #{last_name}"
   end
@@ -119,6 +123,15 @@ class Order < ActiveRecord::Base
 
   def service_type
     ActiveShipping::Stamps::SERVICE_TYPES.invert[self.shipping]
+  end
+
+  def self.accepted_services
+    [
+      'US-FC', # 'USPS First-Class Mail',
+      'US-PM', # 'USPS Priority Mail',
+      'US-XM', # 'USPS Express Mail',
+      'US-PS', # 'USPS Parcel Select'
+    ]
   end
 
   def create_shipment

@@ -9,7 +9,7 @@ module UserApp
           price: r.total_price,
           date: r.delivery_date
         }
-      end
+      end.delete_if { |r| !Order.accepted_services.include? r[:rate] }
 
       session[:rates] = @rates
     end

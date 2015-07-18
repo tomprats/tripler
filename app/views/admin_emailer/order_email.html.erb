@@ -11,7 +11,8 @@
     <h3>Phone Number</h3>
     <p><%= @order.phone_number %></p>
     <h3>Address</h3>
-    <p><%= @order.address %></p>
+    <p><%= @order.address1 %></p>
+    <p><%= @order.address2 %></p>
     <p><%= "#{@order.city}, #{@order.state} #{@order.zipcode}" %></p>
     <h3>Shipping</h3>
     <p><%= "#{@order.shipping} - $#{number_with_precision(@order.shipping_total / 100.0, precision: 2)}" %></p>
