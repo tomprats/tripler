@@ -12,6 +12,7 @@ $(document).ready(function() {
       if(!formSubmitted) {
         formSubmitted = true;
         Stripe.card.createToken({
+          name: $("#card_name").val(),
           number: $("#card_number").val(),
           cvc: $("#card_cvc").val(),
           exp_month: $("#card_exp_month").val(),

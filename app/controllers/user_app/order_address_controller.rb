@@ -28,11 +28,31 @@ module UserApp
       end
 
       if error
-        flash[:alert] = "Your address is invalid. Please update and try again."
-        return redirect_to :back
+        render json: { status: 400, message: "Invalid shipping details. Please ensure you fill out all required fields." }
+      else
+        render json: { status: 200, location: order_address_edit_path }
+      end
+    end
+
+    def edit
+      if current_order.package_params?
+        result = current_order.validate_address
+        update_shipping(
+          address: result.address.try(:to_hash),
+          cleanse_hash: result.override_hash,
+          override_hash: result.override_hash
+        )
+
+        @address = result.address.try(:prettyprint)
+        @match = result.address_match
+        error = !result.city_state_zip_ok
+      else
+        error = true
       end
 
-      render :edit
+      if error
+        redirect_to order_address_path, alert: "Invalid shipping details. Please ensure you fill out all required fields."
+      end
     end
 
     def update

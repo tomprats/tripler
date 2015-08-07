@@ -1,7 +1,6 @@
 module UserApp
   class OrderPurchaseController < UserApplicationController
     def new
-      # Check to ensure complete order
       @order = current_order
       @rate = session[:rate]
     end

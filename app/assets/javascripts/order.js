@@ -65,6 +65,16 @@ $(document).ready(function() {
     });
   }
 
+  if($(".order_address.new").length > 0) {
+    $(document).on("ajax:success", "#new_order", function(e, data) {
+      if(data.status == 200) {
+        location.href = data.location
+      } else {
+        $(this).find(".error").text(data.message)
+      }
+    });
+  }
+
   if($(".order_address.create").length > 0) {
     $(document).on("click", "#order-address .override", function(e) {
       e.preventDefault();

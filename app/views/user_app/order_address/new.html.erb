@@ -2,11 +2,16 @@
   <div id="mainpage">
     <div class="row">
       <div class="col-xs-12">
-        <%= form_for current_order, url: order_address_path, method: :post, html: { class: "form-horizontal margin-20" } do |f| %>
+        <%= form_for current_order, url: order_address_path, method: :post, remote: true, html: { class: "form-horizontal margin-20" } do |f| %>
           <h3>Shipping Details</h3>
           <div class="form-errors margin-bottom-10 text-center"></div>
           <div class="row padding-left-10 padding-0-mobile">
             <div class="col-xs-12">
+              <div class="row">
+                <div class="col-xs-12">
+                  <p class="error text-center"></p>
+                </div>
+              </div>
               <div class="row">
                 <div class="col-xs-6">
                   <div class="form-group padding-right-10 padding-0-mobile">
@@ -72,7 +77,16 @@
                     <%= f.text_field :phone_number, { value: current_user.try(:phone_number), class: "form-control" } %>
                   </div>
                 </div>
-                <%= f.submit "Continue", class: "btn btn-green pull-right" %>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <p class="error text-center"></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <%= f.submit "Continue", class: "btn btn-green pull-right" %>
+                </div>
               </div>
             </div>
           </div>
