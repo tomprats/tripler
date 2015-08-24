@@ -1,5 +1,5 @@
 class NoSubdomain
   def self.matches?(request)
-    !request.subdomain.present? || request.subdomain == "www" || request.subdomain == "triplerfarms"
+    !request.subdomain.present? || ["www", "triplerfarms", "staging", "triplerfarms-staging"].include?(request.subdomain)
   end
 end
