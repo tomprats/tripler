@@ -8,12 +8,12 @@ $(document).ready(function() {
         quantity += parseInt($this.val());
         total += $this.val() * parseFloat($this.closest(".product-box").find(".price").text());
       });
-      $(".packs").text(Math.floor(quantity/8));
-      packless = quantity%8;
+      $(".packs").text(Math.floor(quantity/orderSize));
+      packless = quantity%orderSize;
       if(packless == 0) {
         $(".packless").text(0);
       } else {
-        $(".packless").text(8 - quantity%8);
+        $(".packless").text(orderSize - quantity%orderSize);
       }
       $(".total").text((total).toFixed(2));
     });
@@ -57,7 +57,7 @@ $(document).ready(function() {
           if(data.packless == 0) {
             $(".packless").text(0);
           } else {
-            $(".packless").text(8 - data.packless);
+            $(".packless").text(orderSize - data.packless);
           }
           $(".total").text((data.total_price/100).toFixed(2))
         }

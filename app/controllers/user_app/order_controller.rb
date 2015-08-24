@@ -8,7 +8,7 @@ module UserApp
       if current_order.valid_packs?
         render json: { status: 200, href: order_path }
       else
-        flash[:alert] = "Order must fit into packs of 8"
+        flash[:alert] = "Order must fit into packs of #{Order.size}"
         render json: { status: 200, href: jerky_path }
       end
     end

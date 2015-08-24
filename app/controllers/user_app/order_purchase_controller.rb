@@ -13,10 +13,10 @@ module UserApp
 
       purge_order
       redirect_to order_purchased_path
-    rescue Stripe::StripeError => e
+    rescue => e
       logger.error e.message
 
-      redirect_to :back, alert: e.message
+      redirect_to :back, alert: "There was an error, please try again and/or contact us at 717-542-4022"
     end
   end
 end

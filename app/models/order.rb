@@ -20,6 +20,10 @@ class Order < ActiveRecord::Base
     order(created_at: :desc)
   end
 
+  def self.size
+    4
+  end
+
   def name
     "#{first_name} #{last_name}"
   end
@@ -38,12 +42,12 @@ class Order < ActiveRecord::Base
 
   def packs
     quantity = order_items.collect(&:quantity).sum
-    quantity / 8
+    quantity / Order.size
   end
 
   def packless
     quantity = order_items.collect(&:quantity).sum
-    quantity % 8
+    quantity % Order.size
   end
 
   def valid_packs?
@@ -82,9 +86,9 @@ class Order < ActiveRecord::Base
 
   def package
     @package ||= ActiveShipping::Package.new(
-      (2 * 8), # oz
+      (2 * Order.size), # 2oz per jerky
       [3, 9, 7], # inches
-      value: 6.25 * 8, # dollars
+      value: Product.first.price * Order.size, # dollars
       units: :imperial # not grams, not centimetres
     )
   end
@@ -127,10 +131,10 @@ class Order < ActiveRecord::Base
 
   def self.accepted_services
     [
-      'US-FC', # 'USPS First-Class Mail',
-      'US-PM', # 'USPS Priority Mail',
-      'US-XM', # 'USPS Express Mail',
-      'US-PS', # 'USPS Parcel Select'
+      "US-FC", # 'USPS First-Class Mail'
+      "US-PM", # 'USPS Priority Mail'
+      "US-XM", # 'USPS Express Mail'
+      "US-PS" # 'USPS Parcel Select'
     ]
   end
 
@@ -213,11 +217,11 @@ class Order < ActiveRecord::Base
   end
 
   def add_to_package(package, quantity, order_item)
-    if quantity + order_item.quantity <= 8
+    if quantity + order_item.quantity <= Order.size
       quantity = quantity + order_item.quantity
       package.order_items << order_item
     else
-      space = 8 - quantity
+      space = Order.size - quantity
       order_item.quantity = order_item.quantity - space
       item = order_item.dup
       item.quantity = space
