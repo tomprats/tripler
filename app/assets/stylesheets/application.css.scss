@@ -21,7 +21,7 @@
   @include button-variant(white, $green, $green);
 }
 
-span.highlight { color: yellow; }
+.highlight { color: yellow; }
 
 .clear { clear: both; }
 .left{ float: left; }
