@@ -1,3 +1,5 @@
+@import "variables";
+
 .popup-form,
 .edit-user-form,
 .edit-product-form,
@@ -13,7 +15,7 @@
   padding: 10px 20px;
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.8);
-  color: #FFFFFF;
+  color: $off-white;
   .input-left {
     width: 175px;
     float: left;

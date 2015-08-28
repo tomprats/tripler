@@ -14,14 +14,12 @@
 @import "bootstrap";
 @import "variables";
 @import "font-awesome";
-@import url(http://fonts.googleapis.com/css?family=Bitter);
+@import url(https://fonts.googleapis.com/css?family=Bitter);
 
 .green { color: $green; }
 .btn-green {
   @include button-variant(white, $green, $green);
 }
-
-.highlight { color: yellow; }
 
 .clear { clear: both; }
 .left{ float: left; }
@@ -57,8 +55,8 @@ input, textarea {
 a {
   text-decoration: none;
   color: #667C26;
-  &:hover { color: #FFFFFF; }   /* mouse over link */
-  &:active { color: #FFFFFF; }  /* as clicked link */
+  &:hover { color: $off-white; }   /* mouse over link */
+  &:active { color: $off-white; }  /* as clicked link */
 }
 
 body.normal {
@@ -68,7 +66,7 @@ body.normal {
   background-repeat: no-repeat;
   background-position: center top;
   background-color: #000000;
-  color: #FFFFFF;
+  color: $off-white;
 }
 
 // Flash
