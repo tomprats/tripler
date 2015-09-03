@@ -96,6 +96,6 @@
 
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <div class="stripe-data hide" data-key="<%= ENV["STRIPE_PUBLIC"] %>"></div>
-<%= form_tag order_purchase_path, method: :post, id: "order-purchase", class: "form-horizontal margin-20" do |f| %>
+<%= form_tag order_purchase_path, method: :post, id: "order-purchase", class: "form-horizontal hide" do |f| %>
   <%= submit_tag "Purchase", class: "btn btn-green continue" %>
 <% end %>

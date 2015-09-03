@@ -5,18 +5,12 @@ module UserApp
       hash = remove_empty_items order_params
       update_order hash
 
-      if current_order.valid_packs?
-        render json: { status: 200, href: order_path }
-      else
-        flash[:alert] = "Order must fit into packs of #{Order.size}"
-        render json: { status: 200, href: jerky_path }
-      end
+      render json: { status: 200, href: order_path }
     end
 
     def edit
+      @products = Product.where(coming_soon: false)
       @order = current_order
-
-      redirect_to jerky_path unless @order.total_price > 0
     end
 
     def show
@@ -69,7 +63,11 @@ module UserApp
       index = session[:order]["order_items_attributes"].index do |order_item|
         order_item["product_id"] == hash[:product_id]
       end
-      session[:order]["order_items_attributes"][index] = hash if index
+      if index
+        session[:order]["order_items_attributes"][index] = hash
+      else
+        session[:order]["order_items_attributes"].push hash
+      end
     end
   end
 end

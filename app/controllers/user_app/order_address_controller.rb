@@ -4,9 +4,6 @@ module UserApp
       if !current_order.valid_packs?
         flash[:alert] = "Order must fit into packs of #{Order.size}"
         redirect_to :back
-      elsif current_order.packs >= 10
-        flash[:alert] = "Whoa there! Your order is a big one. Please call us at 717-542-4022 so that we can better handle your order"
-        redirect_to :back
       end
     end
 

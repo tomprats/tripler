@@ -1,7 +1,8 @@
 module UserApp
   class OrderRatesController < UserApplicationController
     def index
-      @rates = current_order.find_rates
+      @order = current_order
+      @rates = @order.find_rates
       @rates = @rates.rates.collect do |r|
         {
           rate: r.service_code,

@@ -1,6 +1,12 @@
 <div id="order">
   <div id="mainpage">
     <h1>Shop</h1>
+    <div class="row">
+      <p class="text-center size-2">
+        Our jerky costs $<%= number_with_precision(@products.first.price / 100.0, precision: 2) %> per pack, and are shipped in packs of <%= Order.size %>.
+        <br>For bulk orders call 717-542-4022 or fill out our <%= link_to "contact form", contact_path %> and we'll get back to you soon.
+      </p>
+    </div>
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -12,13 +18,14 @@
         </tr>
       </thead>
       <tbody>
-        <% @order.order_items.each do |order_item| %>
-          <tr data-id="<%= order_item.product_id %>">
-            <td><%= order_item.product.name %></td>
-            <td><%= order_item.product.description %></td>
-            <td>$<%= number_with_precision(order_item.product.price / 100.0, precision: 2) %></td>
-            <td class="product-quantity text-center"><%= select_tag(:quantity, options_for_select(0..50, order_item.quantity)) %></td>
-            <td class="product-total">$<%= number_with_precision(order_item.product.price * order_item.quantity / 100.0, precision: 2) %></td>
+        <% @products.each do |product| %>
+          <tr data-id="<%= product.id %>">
+            <td><%= product.name %></td>
+            <td><%= product.description %></td>
+            <td>$<%= number_with_precision(product.price / 100.0, precision: 2) %></td>
+            <% quantity = @order.order_items.find { |i| i.product_id == product.id }.try(:quantity) || 0 %>
+            <td class="product-quantity text-center"><%= select_tag(:quantity, options_for_select(0..50, quantity)) %></td>
+            <td class="product-total">$<%= number_with_precision(product.price * quantity / 100.0, precision: 2) %></td>
           </tr>
         <% end %>
         <tr>
