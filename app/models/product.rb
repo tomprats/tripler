@@ -8,4 +8,9 @@ class Product < ActiveRecord::Base
   def self.default_scope
     order(:name)
   end
+
+  # Can be added to db if multiple weights
+  def weight
+    2 # ounces
+  end
 end

@@ -1,8 +1,8 @@
 module UserApp
   class OrderAddressController < UserApplicationController
     def new
-      if !current_order.valid_packs?
-        flash[:alert] = "Order must fit into packs of #{Order.size}"
+      if current_order.quantity.zero?
+        flash[:alert] = "You haven't added any jerky to your cart!"
         redirect_to :back
       end
     end

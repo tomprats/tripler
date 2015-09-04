@@ -20,10 +20,6 @@ class Order < ActiveRecord::Base
     order(created_at: :desc)
   end
 
-  def self.size
-    4
-  end
-
   def name
     "#{first_name} #{last_name}"
   end
@@ -32,26 +28,18 @@ class Order < ActiveRecord::Base
     created_at.strftime("%m/%d/%Y")
   end
 
+  def quantity
+    q = 0
+    order_items.each { |order_item| q += order_item.quantity }
+    q
+  end
+
   def subtotal
     subtotal = 0
     order_items.each do |order_item|
       subtotal += (order_item.price || order_item.product.price) * order_item.quantity
     end
     subtotal
-  end
-
-  def packs
-    quantity = order_items.collect(&:quantity).sum
-    quantity / Order.size
-  end
-
-  def packless
-    quantity = order_items.collect(&:quantity).sum
-    quantity % Order.size
-  end
-
-  def valid_packs?
-    packless.zero?
   end
 
   def package_params?
@@ -84,15 +72,6 @@ class Order < ActiveRecord::Base
     )
   end
 
-  def package
-    @package ||= ActiveShipping::Package.new(
-      (2 * Order.size), # 2oz per jerky
-      [3, 9, 7], # inches
-      value: Product.first.price * Order.size, # dollars
-      units: :imperial # not grams, not centimetres
-    )
-  end
-
   def stamps
     return @stamps if @stamps
 
@@ -110,10 +89,35 @@ class Order < ActiveRecord::Base
   end
 
   def find_rates
-    options = {
-      package_type: "Package",
-    }
-    stamps.find_rates(origin, destination, package, options)
+    split_packages
+
+    rates = []
+    self.packages.each do |package|
+      rates.push stamps.find_rates(
+        origin, destination, package.active_package,
+        { package_type: "Package" }
+      )
+    end
+
+    # Combine ones with the same service codes
+    combined_rates = {}
+    rates.each do |rate|
+      rate.rates.each do |r|
+        if Order.accepted_services.include? r.service_code
+          combined_rates[r.service_code] ||= {
+            service: r.service_name,
+            date: r.delivery_date,
+            price: 0,
+            count: 0
+          }
+          combined_rates[r.service_code][:price] += r.total_price
+          combined_rates[r.service_code][:count] += 1
+        end
+      end
+    end
+
+    combined_rates.delete_if { |s, r| r[:count] < packages.length }
+    combined_rates
   end
 
   def split_packages
@@ -162,7 +166,7 @@ class Order < ActiveRecord::Base
     self.user_id = user_id
 
     split_packages
-    if valid_packs? && !shipping.blank? && card_token
+    if !quantity.zero? && !shipping.blank? && card_token
       Stripe.api_key = ENV["STRIPE_SECRET"]
       charge_description = "Triple R Farms delicious Jerky infused with Cowboy Coffee."
       options = {
@@ -186,7 +190,7 @@ class Order < ActiveRecord::Base
       begin
         create_shipment
       rescue => error
-        AdminEmailer.error_email(order, error).deliver
+        AdminEmailer.error_email(self, error).deliver_now
 
         raise error
       end
@@ -216,17 +220,21 @@ class Order < ActiveRecord::Base
     self.total_price = subtotal + (shipping_total || 0)
   end
 
+  # This is pretty ugly, should refactor
   def add_to_package(package, quantity, order_item)
-    if quantity + order_item.quantity <= Order.size
+    if quantity + order_item.quantity <= Package.size
       quantity = quantity + order_item.quantity
       package.order_items << order_item
     else
-      space = Order.size - quantity
+      space = Package.size - quantity
       order_item.quantity = order_item.quantity - space
-      item = order_item.dup
-      item.quantity = space
-      self.order_items << item
-      package.order_items << item
+
+      unless space.zero?
+        item = order_item.dup
+        item.quantity = space
+        self.order_items << item
+        package.order_items << item
+      end
 
       package = Package.new
       self.packages << package

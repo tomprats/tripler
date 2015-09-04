@@ -16,10 +16,10 @@
               </tr>
             </thead>
             <tbody>
-              <% @rates.each do |rate| %>
-                <tr data-rate="<%= rate[:rate] %>">
+              <% @rates.each do |service, rate| %>
+                <tr data-rate="<%= service %>">
                   <td><%= rate[:service] %></td>
-                  <td>$<%= number_with_precision(rate[:price] * @order.packs / 100.0, precision: 2) %></td>
+                  <td>$<%= number_with_precision(rate[:price] / 100.0, precision: 2) %></td>
                   <td><%= rate[:date].strftime("%m/%d/%Y") %></td>
                   <td><%= link_to "Select", "#", class: "btn btn-green select-rate" %></td>
                 </tr>

@@ -3,7 +3,7 @@
     <h1>Shop</h1>
     <div class="row">
       <p class="text-center size-2">
-        Our jerky costs $<%= number_with_precision(@products.first.price / 100.0, precision: 2) %> per pack, and are shipped in packs of <%= Order.size %>.
+        Our jerky costs $<%= number_with_precision(@products.first.price / 100.0, precision: 2) %> per pack.
         <br>For bulk orders call 717-542-4022 or fill out our <%= link_to "contact form", contact_path %> and we'll get back to you soon.
       </p>
     </div>
@@ -37,14 +37,6 @@
         </tr>
       </tbody>
     </table>
-    <div class="row">
-      <div class="col-xs-12">
-        <h4 class="text-center">
-          <span class="padding-right-40">Packs: <span class="packs"><%= @order.packs %></span></span>
-          <span>Quantity to complete a pack: <span class="packless"><%= @order.packless.zero? ? 0 : Order.size - @order.packless  %></span></span>
-        </h4>
-      </div>
-    </div>
     <div class="row margin-top-20">
       <div class="col-xs-6 text-center order-actions">
         <%= link_to "Empty Cart", order_path, method: :delete, class: "btn btn-green" %>

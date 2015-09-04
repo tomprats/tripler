@@ -3,25 +3,18 @@ module UserApp
     def index
       @order = current_order
       @rates = @order.find_rates
-      @rates = @rates.rates.collect do |r|
-        {
-          rate: r.service_code,
-          service: r.service_name,
-          price: r.total_price,
-          date: r.delivery_date
-        }
-      end.delete_if { |r| !Order.accepted_services.include? r[:rate] }
 
       session[:rates] = @rates
     end
 
     def create
-      rate = session[:rates].find { |r| r[:rate] == params[:rate] }
+      rate = session[:rates].find { |service, r| service == params[:rate] }
+      rate = rate[1].merge(rate: rate[0])
 
       session[:rate] = rate
       update_order(
         shipping: rate[:service],
-        shipping_total: rate[:price] * current_order.packs
+        shipping_total: rate[:price]
       )
 
       redirect_to order_purchase_path

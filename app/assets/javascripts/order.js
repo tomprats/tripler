@@ -8,13 +8,6 @@ $(document).ready(function() {
         quantity += parseInt($this.val());
         total += $this.val() * parseFloat($this.closest(".product-box").find(".price").text());
       });
-      $(".packs").text(Math.floor(quantity/orderSize));
-      packless = quantity%orderSize;
-      if(packless == 0) {
-        $(".packless").text(0);
-      } else {
-        $(".packless").text(orderSize - quantity%orderSize);
-      }
       $(".total").text((total).toFixed(2));
     });
 
@@ -52,12 +45,6 @@ $(document).ready(function() {
           });
           if(data.shipping) {
             $(".shipping-total").text("$" + (data.shipping_total/100).toFixed(2))
-          }
-          $(".packs").text(data.packs)
-          if(data.packless == 0) {
-            $(".packless").text(0);
-          } else {
-            $(".packless").text(orderSize - data.packless);
           }
           $(".total").text((data.total_price/100).toFixed(2))
         }

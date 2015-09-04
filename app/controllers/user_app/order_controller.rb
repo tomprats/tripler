@@ -22,7 +22,7 @@ module UserApp
 
       render json: current_order.to_json(
         include: :order_items,
-        methods: [:subtotal, :packs, :packless]
+        methods: [:subtotal]
       )
     end
 
