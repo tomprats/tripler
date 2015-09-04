@@ -5,6 +5,7 @@ Tripler::Application.routes.draw do
     get :about, to: "pages#about"
     get :jerky, to: "pages#jerky"
     get :contact, to: "pages#contact"
+    get :privacy_policy, to: "pages#privacy_policy"
 
     get :admin, to: "users#admin"
     post :registration, to: "users#registration"

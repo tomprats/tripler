@@ -11,12 +11,19 @@ module UserApp
 
       AdminEmailer.order_email(@order).deliver
 
+      session[:conversion] = { value: @order.total_price, quantity: @order.quantity }
       purge_order
+
       redirect_to order_purchased_path
     rescue => e
       logger.error e.message
 
       redirect_to :back, alert: "There was an error, please try again and/or contact us at 717-542-4022"
+    end
+
+    def show
+      @conversion = session[:conversion]
+      session[:conversion] = nil
     end
   end
 end
