@@ -1,5 +1,7 @@
 module UserApp
   class OrderController < UserApplicationController
+    before_action :reset_shipping
+
     def create
       session[:order] = nil
       hash = remove_empty_items order_params

@@ -1,5 +1,7 @@
 module UserApp
   class OrderAddressController < UserApplicationController
+    before_action :reset_shipping
+
     def new
       if current_order.quantity.zero?
         flash[:alert] = "You haven't added any jerky to your cart!"
@@ -9,7 +11,6 @@ module UserApp
 
     def create
       session[:shipping] = {}
-      session[:rates] = session[:rate] = nil
       update_order order_params
 
       if current_order.package_params?

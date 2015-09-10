@@ -4,6 +4,7 @@ Tripler::Application.routes.draw do
     get :home, to: "pages#home"
     get :about, to: "pages#about"
     get :jerky, to: "pages#jerky"
+    get :farms, to: "pages#farms"
     get :contact, to: "pages#contact"
     get :privacy_policy, to: "pages#privacy_policy"
 

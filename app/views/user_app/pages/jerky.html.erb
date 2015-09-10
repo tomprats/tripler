@@ -13,8 +13,8 @@
       </p>
     </div>
     <div class="row">
-      <% normal = @products.select { |product| !product.name.downcase.include?("coffee") } %>
-      <% coffee = @products.select { |product| product.name.downcase.include?("coffee") } %>
+      <% normal = @products.normal %>
+      <% coffee = @products.coffee %>
       <div class="col-xs-6">
         <h2 class="text-center">Classic Jerky</h2>
         <div class="row">

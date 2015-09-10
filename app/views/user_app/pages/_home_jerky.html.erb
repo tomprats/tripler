@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-xs-12">
+    <%= image_tag product.image.url, class: "product-image" %>
+  </div>
+  <div class="col-xs-12">
+    <h3 class="hide product-name"><%= product.name %></h3>
+    <% quantity = @order.order_items.find { |i| i.product_id == product.id }.try(:quantity) || 0 %>
+    <div class="product-quantity margin-top-10">
+      Quantity:
+      <input type="button" value="-" class="qtyminus" field="quantity<%= product.id %>" />
+      <input type="text" name="quantity<%= product.id %>" value="<%= quantity %>" class="quantity qty" />
+      <input type="button" value="+" class="qtyplus" field="quantity<%= product.id %>" />
+    </div>
+    <div class="hide product-description"><%= product.description %></div>
+    <div class="hide product-price">Price: $<span class="price"><%= number_with_precision(product.price/100.0, precision: 2) %></span></div>
+  </div>
+</div>
