@@ -45,8 +45,19 @@ input, textarea, select {
   color: black;
 }
 
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.container-fluid {
+  max-width: 70%;
+}
+
 /* All links aside from nav bar/footer */
-#mainpage p a {
+.container-fluid p a {
   text-decoration: underline;
   color: #FFFFFF;
   &:hover { color: #FFFFFF; }   /* mouse over link */
@@ -83,15 +94,9 @@ body.normal {
 }
 
 /* Main Content */
-div#secondaryimage {
+#secondaryimage {
   margin: 20px;
   text-align: center;
-}
-div#mainpage {
-  max-width: 70%;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
 }
 
 /* Footer */
@@ -146,7 +151,24 @@ div#mainpage {
 }
 
 @media (max-width: $screen-md-min) {
+  body.normal {
+    background-size: 100%;
+  }
+
+  .container-fluid {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .btn {
+    margin: 5px 0;
+  }
+
   .padding-0-mobile {
     padding: 0;
+  }
+
+  .margin-10-mobile {
+    margin: 10px;
   }
 }

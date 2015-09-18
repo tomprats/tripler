@@ -1,44 +1,40 @@
-<div id="order">
-  <div id="mainpage">
-    <div class="row">
-      <div class="col-xs-12">
-        <%= form_for current_order, url: order_address_path, method: :put, html: { id: "order-address", class: "form-horizontal margin-20" } do |f| %>
-          <%= hidden_field_tag :override, false %>
-          <h3>Shipping Approval</h3>
-          <div class="row padding-left-10 padding-0-mobile">
-            <div class="col-xs-12">
-              <div class="row">
-                <div class="col-xs-12 text-center">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-12">
-                  <p class="text-center">Select continue to use the matched address.</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 col-md-offset-3">
-                  <p><%= @address.gsub("\n", "<br>").html_safe %></p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-12">
-                  <% unless @match %>
-                    <p class="text-center">Select override to use your original address.</p>
-                  <% end %>
-                </div>
-              </div>
-              <div class="row">
-                <%= link_to "Back", order_address_path, class: "btn btn-green pull-left" %>
-                <%= f.submit "Continue", class: "btn btn-green pull-right" %>
-                <% unless @match %>
-                  <%= link_to "Override", "#", class: "btn btn-green pull-right margin-right-10 override" %>
-                <% end %>
-              </div>
+<div class="row">
+  <div class="col-xs-12">
+    <%= form_for current_order, url: order_address_path, method: :put, html: { id: "order-address", class: "form-horizontal margin-20" } do |f| %>
+      <%= hidden_field_tag :override, false %>
+      <h3>Shipping Approval</h3>
+      <div class="row padding-left-10 padding-0-mobile">
+        <div class="col-xs-12">
+          <div class="row">
+            <div class="col-xs-12 text-center">
             </div>
           </div>
-        <% end %>
+          <div class="row">
+            <div class="col-xs-12">
+              <p class="text-center">Select continue to use the matched address.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+              <p><%= @address.gsub("\n", "<br>").html_safe %></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <% unless @match %>
+                <p class="text-center">Select override to use your original address.</p>
+              <% end %>
+            </div>
+          </div>
+          <div class="row">
+            <%= link_to "Back", order_address_path, class: "btn btn-green pull-left" %>
+            <%= f.submit "Continue", class: "btn btn-green pull-right" %>
+            <% unless @match %>
+              <%= link_to "Override", "#", class: "btn btn-green pull-right margin-right-10 override" %>
+            <% end %>
+          </div>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>

@@ -1,3 +1,5 @@
+@import "variables";
+
 #primaryimage {
   margin-left: auto;
   margin-right: auto;
@@ -26,6 +28,10 @@ nav a {
   font-family: Truckstyle, TruckstyleEI;
   &:hover { color: #000000; }   /* mouse over link */
   &:active { color: #000000; }  /* as clicked link */
+  &:focus { color: #000000; }
+}
+.mobile-nav {
+  display: none;
 }
 .pages.home nav .home-link,
 .pages.about nav .about-link,
@@ -44,4 +50,25 @@ nav a {
 @font-face {
   font-family: TruckstyleEI;
   src: asset-url("LHFBostonTruckstyle.eot");
+}
+
+@media (max-width: $screen-md-min) {
+  #primaryimage {
+    height: 125px;
+    width: 100%;
+  }
+
+  .normal-nav {
+    display: none;
+    &.active {
+      display: block;
+      a {
+        display: block;
+        margin: 10px;
+      }
+    }
+  }
+  .mobile-nav {
+    display: block;
+  }
 }

@@ -3,56 +3,52 @@
   <script type="text/javascript">twttr.conversion.trackPid('l6rw3', { tw_sale_amount: 0, tw_order_quantity: 0 });</script>
 <% end %>
 
-<div id="order">
-  <div id="mainpage">
-    <h1>General Store</h1>
+<h1>General Store</h1>
+<div class="row">
+  <p class="text-center size-2">
+    Our jerky costs $<%= number_with_precision(@products.first.price / 100.0, precision: 2) %> per pack.
+    <br>For bulk orders call 717-542-4022 or fill out our <%= link_to "contact form", contact_path %> and we'll get back to you soon.
+  </p>
+</div>
+<div class="row">
+  <% normal = @products.normal %>
+  <% coffee = @products.coffee %>
+  <div class="col-md-4 col-md-offset-2 col-sm-6">
+    <h2 class="text-center">Classic Jerky</h2>
     <div class="row">
-      <p class="text-center size-2">
-        Our jerky costs $<%= number_with_precision(@products.first.price / 100.0, precision: 2) %> per pack.
-        <br>For bulk orders call 717-542-4022 or fill out our <%= link_to "contact form", contact_path %> and we'll get back to you soon.
-      </p>
+      <% normal.each do |product| %>
+        <%= render partial: "jerky", locals: { product: product } %>
+      <% end %>
     </div>
+  </div>
+  <div class="col-md-4 col-sm-6">
+    <h2 class="text-center">Coffee Jerky</h2>
     <div class="row">
-      <% normal = @products.normal %>
-      <% coffee = @products.coffee %>
-      <div class="col-xs-6">
-        <h2 class="text-center">Classic Jerky</h2>
-        <div class="row">
-          <% normal.each do |product| %>
-            <%= render partial: "jerky", locals: { product: product } %>
-          <% end %>
-        </div>
-      </div>
-      <div class="col-xs-6">
-        <h2 class="text-center">Coffee Jerky</h2>
-        <div class="row">
-          <% coffee.each do |product| %>
-            <%= render partial: "jerky", locals: { product: product } %>
-          <% end %>
-        </div>
-      </div>
+      <% coffee.each do |product| %>
+        <%= render partial: "jerky", locals: { product: product } %>
+      <% end %>
     </div>
-    <div class="row margin-top-20">
-      <div class="col-xs-6 text-center">
-        <%= link_to "Empty Cart", order_path, method: :delete, class: "btn btn-green" %>
-        <%= link_to "View Cart", "#", class: "btn btn-green checkout" %>
-      </div>
-      <div class="col-xs-6">
-        <h3 class="margin-0">Total: $<span class="total"><%= number_with_precision(@order.total_price/100.0, precision: 2) %></span></h3>
-      </div>
-    </div>
-    <% unless @coming_soon.empty? %>
-      <h2 class="text-center">Coming Soon</h2>
-      <div class="row">
-        <% normal = @coming_soon.select { |product| !product.name.downcase.include?("coffee") } %>
-        <div class="col-xs-12">
-          <div class="row">
-            <% normal.each do |product| %>
-              <%= render partial: "coming_soon_jerky", locals: { product: product } %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
   </div>
 </div>
+<div class="row margin-top-20">
+  <div class="col-sm-6 text-center">
+    <%= link_to "Empty Cart", order_path, method: :delete, class: "btn btn-green" %>
+    <%= link_to "View Cart", "#", class: "btn btn-green checkout" %>
+  </div>
+  <div class="col-sm-6">
+    <h3 class="margin-0">Total: $<span class="total"><%= number_with_precision(@order.total_price/100.0, precision: 2) %></span></h3>
+  </div>
+</div>
+<% unless @coming_soon.empty? %>
+  <h2 class="text-center">Coming Soon</h2>
+  <div class="row">
+    <% normal = @coming_soon.select { |product| !product.name.downcase.include?("coffee") } %>
+    <div class="col-md-12">
+      <div class="row">
+        <% normal.each do |product| %>
+          <%= render partial: "coming_soon_jerky", locals: { product: product } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

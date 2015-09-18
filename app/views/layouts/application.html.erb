@@ -3,6 +3,7 @@
   <head>
     <title>Triple R Farms</title>
     <meta name="description" content="Triple R Farms Jerky features coffee from Cowboy Coffee, providing a delicious, energy boosting taste">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta property="og:title" content="Triple R Farms"/>
     <meta property="og:site_name" content="Triple R Farms"/>
     <meta property="og:url" content="http://www.triple-r-farms.com"/>
@@ -38,7 +39,9 @@
       <%= render partial: "layouts/users" %>
       <%= render partial: "layouts/alerts" %>
       <%= render partial: "layouts/navbar" %>
-      <%= yield %>
+      <div class="container-fluid">
+        <%= yield %>
+      </div>
       <%= render partial: "layouts/footer" %>
     <% end %>
 

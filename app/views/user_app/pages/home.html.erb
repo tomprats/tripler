@@ -1,34 +1,30 @@
-<div id="home">
-  <div id="mainpage">
-    <h1>Welcome to Triple R Farms</h1>
+<h1>Welcome to Triple R Farms</h1>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <p>We have a real passion for making delicious beef jerky. Have you ever had COFFEE in your beef jerky before? That's just one of our many new flavors. Not only does it taste great, but it also gives you a boost of energy.</p>
+    <iframe class="youtube" width="560" height="315" src="https://www.youtube.com/embed/_f0cdszGTV0?rel=0" frameborder="0" allowfullscreen></iframe>
+    <p>We're so excited about beef jerky that we've been experimenting with our recipes. Available now are our Original and Original with Coffee! Check out our <%= link_to "General Store", jerky_path %> to see other flavors coming soon.</p>
+  </div>
+</div>
+<h1 class="margin-bottom-20">Order Today</h1>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
     <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <p>We have a real passion for making delicious beef jerky. Have you ever had COFFEE in your beef jerky before? That's just one of our many new flavors. Not only does it taste great, but it also gives you a boost of energy.</p>
-        <iframe class="youtube" width="560" height="315" src="https://www.youtube.com/embed/_f0cdszGTV0?rel=0" frameborder="0" allowfullscreen></iframe>
-        <p>We're so excited about beef jerky that we've been experimenting with our recipes. Available now are our Original and Original with Coffee! Check out our <%= link_to "General Store", jerky_path %> to see other flavors coming soon.</p>
+      <div class="col-sm-4 col-sm-offset-1 product-box" data-id="<%= @original.id %>">
+        <%= render partial: "home_jerky", locals: { product: @original } %>
+      </div>
+      <div class="col-sm-4 col-sm-offset-2 product-box" data-id="<%= @coffee.id %>">
+        <%= render partial: "home_jerky", locals: { product: @coffee } %>
       </div>
     </div>
-    <h1 class="margin-bottom-20">Order Today</h1>
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <div class="row">
-          <div class="col-sm-4 col-sm-offset-1 product-box" data-id="<%= @original.id %>">
-            <%= render partial: "home_jerky", locals: { product: @original } %>
-          </div>
-          <div class="col-sm-4 col-sm-offset-2 product-box" data-id="<%= @coffee.id %>">
-            <%= render partial: "home_jerky", locals: { product: @coffee } %>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row margin-top-20">
-      <div class="col-xs-6 text-center">
-        <%= link_to "Empty Cart", order_path, method: :delete, class: "btn btn-green" %>
-        <%= link_to "View Cart", "#", class: "btn btn-green checkout" %>
-      </div>
-      <div class="col-xs-6">
-        <h3 class="margin-0">Total: $<span class="total"><%= number_with_precision(@order.total_price/100.0, precision: 2) %></span></h3>
-      </div>
-    </div>
+  </div>
+</div>
+<div class="row margin-top-20">
+  <div class="col-xs-6 text-center">
+    <%= link_to "Empty Cart", order_path, method: :delete, class: "btn btn-green" %>
+    <%= link_to "View Cart", "#", class: "btn btn-green checkout" %>
+  </div>
+  <div class="col-xs-6">
+    <h3 class="margin-0">Total: $<span class="total"><%= number_with_precision(@order.total_price/100.0, precision: 2) %></span></h3>
   </div>
 </div>
