@@ -75,7 +75,18 @@ module UserApp
         )
       end
 
-      redirect_to order_rates_path
+      if Package.free_shipping?
+        rate = current_order.find_rate
+
+        session[:rate] = rate
+        update_order(
+          shipping: rate[:service],
+          shipping_total: rate[:price]
+        )
+        redirect_to order_purchase_path
+      else
+        redirect_to order_rates_path
+      end
     end
 
     private

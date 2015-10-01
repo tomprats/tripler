@@ -8,8 +8,7 @@ module UserApp
     end
 
     def create
-      rate = session[:rates].find { |service, r| service == params[:rate] }
-      rate = rate[1].merge(rate: rate[0])
+      rate = session[:rates].find { |service, r| service == params[:rate] }[1]
 
       session[:rate] = rate
       update_order(

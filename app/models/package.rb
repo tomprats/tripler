@@ -34,6 +34,10 @@ class Package < ActiveRecord::Base
     8
   end
 
+  def self.free_shipping?
+    true
+  end
+
   private
   def set_uuid
     self.uuid ||= SecureRandom.uuid

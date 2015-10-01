@@ -88,6 +88,12 @@ class Order < ActiveRecord::Base
     stamps.validate_address(destination)
   end
 
+  def find_rate
+    return unless Package.free_shipping?
+
+    find_rates.min_by { |_,r| r[:price] }.last
+  end
+
   def find_rates
     split_packages
 
@@ -105,6 +111,7 @@ class Order < ActiveRecord::Base
       rate.rates.each do |r|
         if Order.accepted_services.include? r.service_code
           combined_rates[r.service_code] ||= {
+            rate: r.service_code,
             service: r.service_name,
             date: r.delivery_date,
             price: 0,
