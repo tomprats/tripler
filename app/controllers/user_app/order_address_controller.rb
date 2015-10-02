@@ -81,7 +81,8 @@ module UserApp
         session[:rate] = rate
         update_order(
           shipping: rate[:service],
-          shipping_total: rate[:price]
+          shipping_total: rate[:price],
+          discount: rate[:price]
         )
         redirect_to order_purchase_path
       else

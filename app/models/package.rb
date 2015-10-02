@@ -8,6 +8,10 @@ class Package < ActiveRecord::Base
 
   delegate :stamps, :origin, :destination, to: :order, allow_nil: true
 
+  def self.default_scope
+    order(created_at: :desc)
+  end
+
   def create_shipment(options)
     options[:integrator_tx_id] = uuid
     response = stamps.create_shipment(origin, destination, active_package, [], options)

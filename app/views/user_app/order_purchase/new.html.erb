@@ -28,6 +28,15 @@
           <td></td>
           <td>$<%= number_with_precision(@order.shipping_total / 100.0, precision: 2) %></td>
         </tr>
+        <% unless @order.discount.zero? %>
+          <tr>
+            <td><b>Discount</b></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>($<%= number_with_precision(@order.discount / 100.0, precision: 2) %>)</td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>

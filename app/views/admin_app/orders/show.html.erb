@@ -6,6 +6,7 @@
       <th>Phone Number</th>
       <th>Shipping</th>
       <th>Shipping Price</th>
+      <th>Discount</th>
       <th>Total Price</th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
       <td><%= @order.phone_number %></td>
       <td><%= @order.shipping %></td>
       <td>$<%= number_with_precision(@order.shipping_total / 100.0, precision: 2) %></td>
+      <td>$<%= number_with_precision(@order.discount / 100.0, precision: 2) %></td>
       <td>$<%= number_with_precision(@order.total_price / 100.0, precision: 2) %></td>
     </tr>
   </tbody>

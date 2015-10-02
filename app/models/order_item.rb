@@ -7,6 +7,10 @@ class OrderItem < ActiveRecord::Base
   after_initialize :update_total, if: :new_record?
   before_save :update_total
 
+  def self.default_scope
+    order(created_at: :desc)
+  end
+
   private
   def set_details
     self.price = product.price

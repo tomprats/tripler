@@ -15,6 +15,7 @@ class Order < ActiveRecord::Base
 
   after_initialize :update_total
   before_save :update_total
+  before_save :validate_discount
 
   def self.default_scope
     order(created_at: :desc)
@@ -211,6 +212,7 @@ class Order < ActiveRecord::Base
       :phone_number, :address1, :address2,
       :city, :state, :zipcode,
       :shipping, :shipping_total,
+      :discount,
       order_items_attributes: [
         :product_id, :quantity
       ]
@@ -223,11 +225,18 @@ class Order < ActiveRecord::Base
     self.uuid ||= SecureRandom.uuid
   end
 
-  def update_total
-    self.total_price = subtotal + (shipping_total || 0)
+  def validate_discount
+    # Based off of the assumption update_total runs first
+    return false unless total_price > 0
+
+    # Add coupon validations here
+    return discount > 0 ? Package.free_shipping? : true
   end
 
-  # This is pretty ugly, should refactor
+  def update_total
+    self.total_price = subtotal + (shipping_total || 0) - discount
+  end
+
   def add_to_package(package, quantity, order_item)
     if quantity + order_item.quantity <= Package.size
       quantity = quantity + order_item.quantity
