@@ -5,6 +5,7 @@
   margin-right: auto;
   height: 240px;
   width: 736px;
+  padding: 10px;
   .facebook{
     float: right;
   }
@@ -54,7 +55,6 @@ nav a {
 
 @media (max-width: $screen-md-min) {
   #primaryimage {
-    height: 125px;
     width: 100%;
   }
 
