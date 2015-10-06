@@ -4,11 +4,15 @@
   <div class="clearfix margin-bottom-5"></div>
   <%= form_for(:product, url: admin_products_path, html: { class: "form-horizontal" }) do |f| %>
     <div class="margin-top-10 margin-bottom-10">
-      <div class="input-left">
+      <div class="input-full">
         <%= f.text_field :name, { placeholder: "Name", class: "form-control" } %>
       </div>
-      <div class="input-right">
+      <div class="clearfix margin-bottom-10"></div>
+      <div class="input-left">
         <%= f.number_field :price, { step: 0.01, placeholder: "Price", class: "form-control" } %>
+      </div>
+      <div class="input-right">
+        <%= f.number_field :position, { step: 1, placeholder: "Position", class: "form-control" } %>
       </div>
       <div class="clearfix margin-bottom-10"></div>
       <div class="input-full">

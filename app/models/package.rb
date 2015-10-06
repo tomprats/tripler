@@ -9,7 +9,7 @@ class Package < ActiveRecord::Base
   delegate :stamps, :origin, :destination, to: :order, allow_nil: true
 
   def self.default_scope
-    order(created_at: :desc)
+    order(position: :desc, created_at: :desc)
   end
 
   def create_shipment(options)

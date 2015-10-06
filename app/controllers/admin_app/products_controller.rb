@@ -36,6 +36,7 @@ module AdminApp
         :name,
         :description,
         :price,
+        :position,
         :coming_soon,
         :image
       )
