@@ -6,7 +6,7 @@ class Product < ActiveRecord::Base
   mount_uploader :image, ProductImageUploader
 
   def self.default_scope
-    order(:name)
+    order(position: :asc, name: :asc)
   end
 
   def self.normal
