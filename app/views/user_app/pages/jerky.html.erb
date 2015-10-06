@@ -45,8 +45,8 @@
     <% normal = @coming_soon.select { |product| !product.name.downcase.include?("coffee") } %>
     <div class="col-md-12">
       <div class="row">
-        <% normal.each do |product| %>
-          <%= render partial: "coming_soon_jerky", locals: { product: product } %>
+        <% normal.each_with_index do |product, index| %>
+          <%= render partial: "coming_soon_jerky", locals: { product: product, index: index, count: normal.count } %>
         <% end %>
       </div>
     </div>
