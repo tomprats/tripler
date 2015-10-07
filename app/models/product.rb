@@ -21,6 +21,14 @@ class Product < ActiveRecord::Base
     where("description ILIKE ?", "%Original%")
   end
 
+  def self.available
+    where(coming_soon: false)
+  end
+
+  def self.coming_soon
+    where(coming_soon: true)
+  end
+
   # Can be added to db if multiple weights
   def weight
     2 # ounces

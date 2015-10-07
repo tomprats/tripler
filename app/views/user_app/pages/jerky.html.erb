@@ -11,20 +11,10 @@
   </p>
 </div>
 <div class="row">
-  <% normal = @products.normal %>
-  <% coffee = @products.coffee %>
-  <div class="col-md-4 col-md-offset-2 col-sm-6">
-    <h2 class="text-center">Classic Jerky</h2>
+  <h2 class="text-center">Classic & Coffee Jerky</h2>
+  <div class="col-md-8 col-md-offset-2 col-sm-12">
     <div class="row">
-      <% normal.each do |product| %>
-        <%= render partial: "jerky", locals: { product: product } %>
-      <% end %>
-    </div>
-  </div>
-  <div class="col-md-4 col-sm-6">
-    <h2 class="text-center">Coffee Jerky</h2>
-    <div class="row">
-      <% coffee.each do |product| %>
+      <% @products.each do |product| %>
         <%= render partial: "jerky", locals: { product: product } %>
       <% end %>
     </div>
@@ -42,11 +32,10 @@
 <% unless @coming_soon.empty? %>
   <h2 class="text-center">Coming Soon</h2>
   <div class="row">
-    <% normal = @coming_soon.select { |product| !product.name.downcase.include?("coffee") } %>
     <div class="col-md-12">
       <div class="row">
-        <% normal.each_with_index do |product, index| %>
-          <%= render partial: "coming_soon_jerky", locals: { product: product, index: index, count: normal.count } %>
+        <% @coming_soon.each_with_index do |product, index| %>
+          <%= render partial: "coming_soon_jerky", locals: { product: product, index: index, count: @coming_soon.count } %>
         <% end %>
       </div>
     </div>

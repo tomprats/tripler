@@ -1,5 +1,7 @@
 <% classes = "col-md-4"
-if (index%2).zero? && (count%2).zero?
+if index == count - 1 && (count%3) == 1
+  classes += " col-md-offset-4"
+elsif (index%2).zero? && (count%2).zero?
   classes += " col-md-offset-2"
 end %>
 <div class="<%= classes %> product-box">

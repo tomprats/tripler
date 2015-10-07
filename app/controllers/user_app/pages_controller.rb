@@ -9,8 +9,8 @@ module UserApp
     end
 
     def jerky
-      @products = Product.where(coming_soon: false)
-      @coming_soon = Product.where(coming_soon: true)
+      @products = Product.available
+      @coming_soon = Product.normal.coming_soon
       @order = current_order
     end
   end
